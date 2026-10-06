@@ -2,7 +2,7 @@
 abstract final class AppInfo {
   /// Deve coincidere con `version:` in pubspec.yaml (un test lo verifica).
   static const String version = '1.0.0';
-  static const int buildNumber = 1;
+  static const int buildNumber = 2;
 
   static const String developerName = 'Nicola De Nicolais';
   static const String developerEmail = 'ndn21dev@gmail.com';

@@ -3,7 +3,7 @@ description: "Fivelink - daily chain puzzle"
 publish_to: 'none'
 
 # versionName+versionCode. Il versionCode va incrementato a ogni caricamento su Play.
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: ^3.12.2
