@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'core/daily.dart';
+import 'game/game_screen.dart';
 import 'l10n/generated/app_localizations.dart';
 
 class FivelinkApp extends StatelessWidget {
-  const FivelinkApp({super.key});
+  const FivelinkApp({super.key, this.clock = const SystemClock()});
+
+  /// Sostituibile nei test per simulare un giorno preciso.
+  final Clock clock;
 
   @override
   Widget build(BuildContext context) {
@@ -20,19 +25,7 @@ class FivelinkApp extends StatelessWidget {
           brightness: Brightness.dark,
         ),
       ),
-      home: const _PlaceholderScreen(),
-    );
-  }
-}
-
-/// Sostituita dalla schermata di gioco nella fase 3.
-class _PlaceholderScreen extends StatelessWidget {
-  const _PlaceholderScreen();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text(AppLocalizations.of(context).appTitle)),
+      home: GameScreen(clock: clock),
     );
   }
 }

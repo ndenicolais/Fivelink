@@ -5,14 +5,7 @@ import 'package:fivelink/core/daily.dart';
 import 'package:fivelink/core/puzzle_generator.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-final class _FakeClock implements Clock {
-  _FakeClock(this.current);
-
-  DateTime current;
-
-  @override
-  DateTime now() => current;
-}
+import '../helpers/fake_clock.dart';
 
 void main() {
   group('puzzleNumber', () {
@@ -110,7 +103,7 @@ void main() {
 
   group('DailyPuzzle', () {
     test('uses the injected clock', () {
-      final _FakeClock clock = _FakeClock(DateTime(2026, 10, 25, 18, 45));
+      final FakeClock clock = FakeClock(DateTime(2026, 10, 25, 18, 45));
       final DailyPuzzle daily = DailyPuzzle.today(clock);
       expect(daily.date, DateTime(2026, 10, 25));
       expect(daily.number, 16);
@@ -121,7 +114,7 @@ void main() {
     });
 
     test('isForDay detects a day change', () {
-      final _FakeClock clock = _FakeClock(DateTime(2026, 10, 25, 23, 59));
+      final FakeClock clock = FakeClock(DateTime(2026, 10, 25, 23, 59));
       final DailyPuzzle daily = DailyPuzzle.today(clock);
       expect(daily.isForDay(clock.now()), isTrue);
       clock.current = DateTime(2026, 10, 26, 0, 0, 1);

@@ -103,6 +103,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fivelink'**
   String get appTitle;
+
+  /// Game screen title with the daily puzzle number
+  ///
+  /// In en, this message translates to:
+  /// **'Fivelink #{number}'**
+  String puzzleTitle(int number);
+
+  /// Label above the starting number
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get startLabel;
+
+  /// Label above the target number
+  ///
+  /// In en, this message translates to:
+  /// **'Target'**
+  String get targetLabel;
+
+  /// Which attempt the player is on
+  ///
+  /// In en, this message translates to:
+  /// **'Attempt {current} of {max}'**
+  String attemptCounter(int current, int max);
+
+  /// Shown before the first attempt
+  ///
+  /// In en, this message translates to:
+  /// **'Put the 5 tiles in order to turn the start number into the target. Each tile is used once.'**
+  String get historyHint;
+
+  /// Empties all slots
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clearButton;
+
+  /// Submits the current order
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get checkButton;
+
+  /// Shown when the slots repeat a previous attempt
+  ///
+  /// In en, this message translates to:
+  /// **'You already tried this order'**
+  String get alreadyTried;
+
+  /// Attempt result: an invalid step stopped the chain
+  ///
+  /// In en, this message translates to:
+  /// **'Chain broken'**
+  String get outcomeBroken;
+
+  /// Attempt result: the chain completed with the wrong number
+  ///
+  /// In en, this message translates to:
+  /// **'Reached {value}'**
+  String outcomeWrongResult(int value);
+
+  /// Attempt result: the chain reached the target
+  ///
+  /// In en, this message translates to:
+  /// **'Solved'**
+  String get outcomeSolved;
+
+  /// Screen reader summary of a past attempt
+  ///
+  /// In en, this message translates to:
+  /// **'Attempt {number}: {tiles}. {outcome}'**
+  String attemptSemantics(int number, String tiles, String outcome);
+
+  /// Game over title after a win
+  ///
+  /// In en, this message translates to:
+  /// **'Solved!'**
+  String get wonTitle;
+
+  /// How many attempts the win took
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{On the first attempt} other{In {count} attempts}}'**
+  String wonSubtitle(int count);
+
+  /// Game over title after a loss
+  ///
+  /// In en, this message translates to:
+  /// **'Out of attempts'**
+  String get lostTitle;
+
+  /// Heading above the solution shown after a loss
+  ///
+  /// In en, this message translates to:
+  /// **'Solution'**
+  String get solutionLabel;
+
+  /// Countdown to the next daily puzzle
+  ///
+  /// In en, this message translates to:
+  /// **'Next puzzle in {time}'**
+  String nextPuzzleIn(String time);
+
+  /// Screen reader name of an addition tile
+  ///
+  /// In en, this message translates to:
+  /// **'plus {n}'**
+  String opAdd(int n);
+
+  /// Screen reader name of a subtraction tile
+  ///
+  /// In en, this message translates to:
+  /// **'minus {n}'**
+  String opSubtract(int n);
+
+  /// Screen reader name of a multiplication tile
+  ///
+  /// In en, this message translates to:
+  /// **'times {n}'**
+  String opMultiply(int n);
+
+  /// Screen reader name of a division tile
+  ///
+  /// In en, this message translates to:
+  /// **'divided by {n}'**
+  String opDivide(int n);
+
+  /// Screen reader name of the digit reversal tile
+  ///
+  /// In en, this message translates to:
+  /// **'reverse digits'**
+  String get opReverse;
+
+  /// Screen reader hint for an available tile
+  ///
+  /// In en, this message translates to:
+  /// **'place in the first free slot'**
+  String get tileHint;
+
+  /// Screen reader label of an empty slot
+  ///
+  /// In en, this message translates to:
+  /// **'Slot {index}, empty'**
+  String slotEmpty(int index);
+
+  /// Screen reader label of a filled slot
+  ///
+  /// In en, this message translates to:
+  /// **'Slot {index}: {tile}'**
+  String slotFilled(int index, String tile);
+
+  /// Screen reader hint for a filled slot
+  ///
+  /// In en, this message translates to:
+  /// **'remove the tile'**
+  String get slotHint;
 }
 
 class _AppLocalizationsDelegate

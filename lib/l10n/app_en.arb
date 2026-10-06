@@ -3,5 +3,149 @@
   "appTitle": "Fivelink",
   "@appTitle": {
     "description": "Application name"
+  },
+  "puzzleTitle": "Fivelink #{number}",
+  "@puzzleTitle": {
+    "description": "Game screen title with the daily puzzle number",
+    "placeholders": {
+      "number": {"type": "int"}
+    }
+  },
+  "startLabel": "Start",
+  "@startLabel": {
+    "description": "Label above the starting number"
+  },
+  "targetLabel": "Target",
+  "@targetLabel": {
+    "description": "Label above the target number"
+  },
+  "attemptCounter": "Attempt {current} of {max}",
+  "@attemptCounter": {
+    "description": "Which attempt the player is on",
+    "placeholders": {
+      "current": {"type": "int"},
+      "max": {"type": "int"}
+    }
+  },
+  "historyHint": "Put the 5 tiles in order to turn the start number into the target. Each tile is used once.",
+  "@historyHint": {
+    "description": "Shown before the first attempt"
+  },
+  "clearButton": "Clear",
+  "@clearButton": {
+    "description": "Empties all slots"
+  },
+  "checkButton": "Check",
+  "@checkButton": {
+    "description": "Submits the current order"
+  },
+  "alreadyTried": "You already tried this order",
+  "@alreadyTried": {
+    "description": "Shown when the slots repeat a previous attempt"
+  },
+  "outcomeBroken": "Chain broken",
+  "@outcomeBroken": {
+    "description": "Attempt result: an invalid step stopped the chain"
+  },
+  "outcomeWrongResult": "Reached {value}",
+  "@outcomeWrongResult": {
+    "description": "Attempt result: the chain completed with the wrong number",
+    "placeholders": {
+      "value": {"type": "int"}
+    }
+  },
+  "outcomeSolved": "Solved",
+  "@outcomeSolved": {
+    "description": "Attempt result: the chain reached the target"
+  },
+  "attemptSemantics": "Attempt {number}: {tiles}. {outcome}",
+  "@attemptSemantics": {
+    "description": "Screen reader summary of a past attempt",
+    "placeholders": {
+      "number": {"type": "int"},
+      "tiles": {"type": "String"},
+      "outcome": {"type": "String"}
+    }
+  },
+  "wonTitle": "Solved!",
+  "@wonTitle": {
+    "description": "Game over title after a win"
+  },
+  "wonSubtitle": "{count, plural, =1{On the first attempt} other{In {count} attempts}}",
+  "@wonSubtitle": {
+    "description": "How many attempts the win took",
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "lostTitle": "Out of attempts",
+  "@lostTitle": {
+    "description": "Game over title after a loss"
+  },
+  "solutionLabel": "Solution",
+  "@solutionLabel": {
+    "description": "Heading above the solution shown after a loss"
+  },
+  "nextPuzzleIn": "Next puzzle in {time}",
+  "@nextPuzzleIn": {
+    "description": "Countdown to the next daily puzzle",
+    "placeholders": {
+      "time": {"type": "String"}
+    }
+  },
+  "opAdd": "plus {n}",
+  "@opAdd": {
+    "description": "Screen reader name of an addition tile",
+    "placeholders": {
+      "n": {"type": "int"}
+    }
+  },
+  "opSubtract": "minus {n}",
+  "@opSubtract": {
+    "description": "Screen reader name of a subtraction tile",
+    "placeholders": {
+      "n": {"type": "int"}
+    }
+  },
+  "opMultiply": "times {n}",
+  "@opMultiply": {
+    "description": "Screen reader name of a multiplication tile",
+    "placeholders": {
+      "n": {"type": "int"}
+    }
+  },
+  "opDivide": "divided by {n}",
+  "@opDivide": {
+    "description": "Screen reader name of a division tile",
+    "placeholders": {
+      "n": {"type": "int"}
+    }
+  },
+  "opReverse": "reverse digits",
+  "@opReverse": {
+    "description": "Screen reader name of the digit reversal tile"
+  },
+  "tileHint": "place in the first free slot",
+  "@tileHint": {
+    "description": "Screen reader hint for an available tile"
+  },
+  "slotEmpty": "Slot {index}, empty",
+  "@slotEmpty": {
+    "description": "Screen reader label of an empty slot",
+    "placeholders": {
+      "index": {"type": "int"}
+    }
+  },
+  "slotFilled": "Slot {index}: {tile}",
+  "@slotFilled": {
+    "description": "Screen reader label of a filled slot",
+    "placeholders": {
+      "index": {"type": "int"},
+      "tile": {"type": "String"}
+    }
+  },
+  "slotHint": "remove the tile",
+  "@slotHint": {
+    "description": "Screen reader hint for a filled slot"
   }
 }
