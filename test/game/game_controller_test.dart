@@ -89,7 +89,7 @@ void main() {
       expect(c.attempts, isEmpty);
     });
 
-    test('a wrong attempt is recorded and the slots stay filled', () {
+    test('a wrong attempt is recorded and the slots are emptied', () {
       final GameController c = _newGame();
       _place(c, [0, 1, 2, 3, 4]);
       final Attempt? a = c.submit();
@@ -97,13 +97,14 @@ void main() {
       expect(a!.outcome, isNot(AttemptOutcome.solved));
       expect(c.attempts, hasLength(1));
       expect(c.status, GameStatus.playing);
-      expect(c.slots, [0, 1, 2, 3, 4]);
+      expect(c.slotsEmpty, isTrue);
     });
 
     test('the same order cannot be submitted twice', () {
       final GameController c = _newGame();
       _place(c, [0, 1, 2, 3, 4]);
       c.submit();
+      _place(c, [0, 1, 2, 3, 4]);
       expect(c.isDuplicate, isTrue);
       expect(c.canSubmit, isFalse);
       expect(c.submit(), isNull);
@@ -185,8 +186,7 @@ void main() {
         [4, 3, 2, 1, 0],
       ]);
       expect(second.status, GameStatus.playing);
-      expect(second.slots, [4, 3, 2, 1, 0], reason: 'last order is kept');
-      expect(second.isDuplicate, isTrue);
+      expect(second.slotsEmpty, isTrue);
     });
 
     test('a finished game is restored without counting it twice', () {

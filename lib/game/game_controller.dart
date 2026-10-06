@@ -104,12 +104,13 @@ class GameController extends ChangeNotifier {
   }
 
   /// Verifica l'ordine negli slot. Restituisce il tentativo registrato, o null
-  /// se non si può verificare. Gli slot restano pieni, così il giocatore può
-  /// correggere l'ordine senza ricominciare.
+  /// se non si può verificare. Se la partita continua gli slot vengono
+  /// svuotati per il tentativo successivo.
   Attempt? submit() {
     if (!canSubmit) return null;
     _addAttempt(_slots.cast<int>().toList());
     _recordResultIfOver();
+    if (!isOver) _slots.fillRange(0, _slots.length, null);
     unawaited(
       _storage.saveDay(
         DayRecord(
@@ -145,9 +146,6 @@ class GameController extends ChangeNotifier {
     for (final List<int> order in saved.attempts) {
       if (isOver || !_isValidOrder(order)) break;
       _addAttempt(order);
-    }
-    if (_attempts.isNotEmpty && !isOver) {
-      _slots.setAll(0, _attempts.last.order);
     }
     // Se l'app si è chiusa tra il salvataggio della partita e quello delle
     // statistiche, il risultato viene registrato adesso.

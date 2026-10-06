@@ -87,12 +87,15 @@ void main() {
     await _playOrder(tester, [0, 1, 2, 3, 4]);
 
     expect(find.text('Chain broken'), findsOneWidget);
-    expect(find.text('Attempt 2 of 6'), findsNothing);
-    expect(find.text('You already tried this order'), findsOneWidget);
+    expect(find.text('Attempt 2 of 6'), findsOneWidget);
     expect(_checkButton(tester).onPressed, isNull);
 
-    await _clear(tester);
-    expect(find.text('Attempt 2 of 6'), findsOneWidget);
+    for (final int tile in [0, 1, 2, 3, 4]) {
+      await tester.tap(find.byKey(ValueKey('tile-$tile')));
+    }
+    await tester.pump();
+    expect(find.text('You already tried this order'), findsOneWidget);
+    expect(_checkButton(tester).onPressed, isNull);
   });
 
   testWidgets('input is locked while the chain is revealed', (tester) async {
@@ -345,7 +348,7 @@ void main() {
     await tester.pumpWidget(const SizedBox());
     await _startGame(tester, storage: storage);
     expect(find.text('Chain broken'), findsOneWidget);
-    expect(find.text('You already tried this order'), findsOneWidget);
+    expect(find.text('Attempt 2 of 6'), findsOneWidget);
   });
 
   testWidgets('a new day loads when the app comes back', (tester) async {

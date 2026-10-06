@@ -27,7 +27,7 @@ Every intermediate and final value must be an integer from 1 to 999. The `⇄` t
 - The player fills the 5 slots by tapping tiles (a tile goes to the first free slot, tapping a filled slot puts the tile back) and taps **Check**. There is no preview while arranging.
 - On check, the chain is revealed one value at a time (`chainStepDuration`, 380 ms per step) up to the result or the break point. Input is locked meanwhile.
 - An attempt is correct when the chain is complete and the result equals the target: the result is validated, not compared with the stored solution.
-- At most **6 attempts**. The same order cannot be checked twice. After a check the slots stay filled, so the player can adjust the order.
+- At most **6 attempts**. The same order cannot be checked twice. After a wrong check the slots are emptied for the next attempt (a game in progress also restarts with empty slots).
 - At the end: outcome, the solution if lost, statistics, countdown to the next puzzle and **Share**.
 
 Share text, without the solution: `Fivelink #12 · 3/6` (or `X/6` when lost) followed by one square per attempt: 🟥 broken chain, 🟧 complete chain with the wrong result, 🟩 solved.
@@ -121,7 +121,7 @@ Links and addresses (email, website, online privacy policy) are copied to the cl
 - `compileSdk` and `targetSdk` 36, as required by Google Play for new apps and updates from 31 August 2026. `minSdk` 24 (Android 7.0).
 - Portrait only (manifest and `SystemChrome`).
 - **No `INTERNET` permission** in the main manifest and no network calls (debug and profile builds have it by default, for the Flutter tools).
-- **App icon**: adaptive icon with background `#1A2147`, the foreground from `assets/images/fivelink-foreground-1024.png` with a 7% inset, and a monochrome version for themed icons on Android 13+. **Launch screen**: background color only (`#F6F7FB` / `#0F1430`); from Android 12 the system shows the app icon. Both are generated into `android/app/src/main/res/` with `flutter_launcher_icons` and `flutter_native_splash`. The configuration files were removed after generation. To regenerate, add the two packages as dev dependencies again and recreate the configuration. Keep `android_screen_orientation: portrait` in the splash configuration, or the tool removes the portrait lock from the manifest.
+- **App icon**: adaptive icon with background `#1A2147`, the foreground from `assets/images/fivelink-foreground-1024.png` with a 7% inset, and a monochrome version for themed icons on Android 13+. **Launch screen**: background color only (`#F6F7FB` / `#0F1430`); from Android 12 the system shows the app icon. `main()` defers the first Flutter frame until at least 1.2 s after start, so the launch screen stays visible instead of flashing by. Both are generated into `android/app/src/main/res/` with `flutter_launcher_icons` and `flutter_native_splash`. The configuration files were removed after generation. To regenerate, add the two packages as dev dependencies again and recreate the configuration. Keep `android_screen_orientation: portrait` in the splash configuration, or the tool removes the portrait lock from the manifest.
 
 ---
 
