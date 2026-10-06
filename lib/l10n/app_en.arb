@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "appTitle": "Fivelink",
+  "@appTitle": {
+    "description": "Application name"
+  }
+}
