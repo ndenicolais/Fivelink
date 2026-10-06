@@ -1,7 +1,10 @@
 import 'package:fivelink/app.dart';
+import 'package:fivelink/app_info.dart';
 import 'package:fivelink/core/puzzle.dart';
 import 'package:fivelink/core/puzzle_generator.dart';
+import 'package:fivelink/data/models.dart';
 import 'package:fivelink/data/storage.dart';
+import 'package:fivelink/info/info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -164,6 +167,7 @@ void main() {
     await _startGame(tester, storage: storage);
     expect(find.text('How to play'), findsWidgets);
     expect(find.text('Example'), findsOneWidget);
+    expect(find.byType(BackButton), findsNothing);
 
     await tester.scrollUntilVisible(
       find.byKey(const ValueKey('help-play')),
@@ -184,17 +188,89 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('open-help')));
     await tester.pumpAndSettle();
     expect(find.text('Example'), findsOneWidget);
+    expect(find.byType(BackButton), findsOneWidget);
     await tester.pageBack();
     await tester.pumpAndSettle();
     expect(find.text('Example'), findsNothing);
   });
 
-  testWidgets('statistics open from the app bar', (tester) async {
-    await _startGame(tester);
-    await tester.tap(find.byKey(const ValueKey('open-stats')));
+  Future<void> openInfo(WidgetTester tester) async {
+    await tester.tap(find.byKey(const ValueKey('open-info')));
     await tester.pumpAndSettle();
-    expect(find.text('Statistics'), findsWidgets);
+  }
+
+  testWidgets('statistics open from the info page', (tester) async {
+    await _startGame(tester);
+    await openInfo(tester);
+    expect(find.text('Info and settings'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('info-stats')));
+    await tester.pumpAndSettle();
+    expect(find.text('Statistics'), findsOneWidget);
     expect(find.text('Wins by attempt'), findsOneWidget);
+  });
+
+  testWidgets('the info page shows version and developer', (tester) async {
+    await _startGame(tester);
+    await openInfo(tester);
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('info-privacy')),
+      200,
+      scrollable: find
+          .descendant(
+            of: find.byType(InfoScreen),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    expect(
+      find.text('${AppInfo.version} (${AppInfo.buildNumber})'),
+      findsOneWidget,
+    );
+    expect(find.text('Nicola De Nicolais'), findsOneWidget);
+    expect(find.text('ndn21dev@gmail.com'), findsOneWidget);
+    expect(find.text('https://ndenicolais.github.io/'), findsOneWidget);
+  });
+
+  testWidgets('the theme can be forced and is remembered', (tester) async {
+    final Storage storage = await createStorage(helpSeenValues);
+    await _startGame(tester, storage: storage);
+    await openInfo(tester);
+    await tester.tap(find.text('Dark'));
+    await tester.pumpAndSettle();
+    expect(
+      Theme.of(tester.element(find.text('Info and settings'))).brightness,
+      Brightness.dark,
+    );
+    expect(storage.loadSettings().theme, ThemePreference.dark);
+  });
+
+  testWidgets('vibration can be turned off', (tester) async {
+    final Storage storage = await createStorage(helpSeenValues);
+    await _startGame(tester, storage: storage);
+    await openInfo(tester);
+    await tester.tap(find.byKey(const ValueKey('haptics-switch')));
+    await tester.pumpAndSettle();
+    expect(storage.loadSettings().haptics, isFalse);
+  });
+
+  testWidgets('the privacy policy opens from the info page', (tester) async {
+    await _startGame(tester);
+    await openInfo(tester);
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('info-privacy')),
+      200,
+      scrollable: find
+          .descendant(
+            of: find.byType(InfoScreen),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    await tester.tap(find.byKey(const ValueKey('info-privacy')));
+    await tester.pumpAndSettle();
+    expect(find.text('Privacy policy'), findsOneWidget);
+    expect(find.text('1. Data controller'), findsOneWidget);
+    expect(find.textContaining('Last updated:'), findsOneWidget);
   });
 
   testWidgets('the game over panel has stats and share', (tester) async {

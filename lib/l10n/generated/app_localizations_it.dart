@@ -124,9 +124,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get helpTooltip => 'Come si gioca';
 
   @override
-  String get statsTooltip => 'Statistiche';
-
-  @override
   String get helpTitle => 'Come si gioca';
 
   @override
@@ -227,4 +224,147 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get shareButton => 'Condividi';
+
+  @override
+  String get infoTooltip => 'Info e impostazioni';
+
+  @override
+  String get infoTitle => 'Info e impostazioni';
+
+  @override
+  String get infoStatsSubtitle => 'Partite, vittorie e serie';
+
+  @override
+  String get settingsSection => 'Impostazioni';
+
+  @override
+  String get settingsTheme => 'Tema';
+
+  @override
+  String get themeSystem => 'Sistema';
+
+  @override
+  String get themeLight => 'Chiaro';
+
+  @override
+  String get themeDark => 'Scuro';
+
+  @override
+  String get settingsHaptics => 'Vibrazione';
+
+  @override
+  String get settingsHapticsSubtitle =>
+      'Quando inserisci le tessere e vedi il risultato';
+
+  @override
+  String get infoAboutSection => 'Informazioni';
+
+  @override
+  String get appDescription =>
+      'Un rompicapo numerico al giorno: metti in ordine 5 tessere operazione per trasformare il numero di partenza nell\'obiettivo. Funziona interamente offline.';
+
+  @override
+  String get infoVersion => 'Versione';
+
+  @override
+  String get infoDeveloper => 'Sviluppatore';
+
+  @override
+  String get infoEmail => 'Email';
+
+  @override
+  String get infoWebsite => 'Sito web';
+
+  @override
+  String get copyTooltip => 'Copia';
+
+  @override
+  String get copiedMessage => 'Copiato negli appunti';
+
+  @override
+  String get privacyTitle => 'Informativa sulla privacy';
+
+  @override
+  String privacyLastUpdated(String date) {
+    return 'Ultimo aggiornamento: $date';
+  }
+
+  @override
+  String get privacyOnline => 'Versione online';
+
+  @override
+  String get privacyIntro =>
+      'Fivelink è un rompicapo che funziona interamente offline. Non richiede un account, non mostra pubblicità, non usa strumenti di analisi e non raccoglie né vende dati personali.';
+
+  @override
+  String get privacyControllerTitle => '1. Titolare del trattamento';
+
+  @override
+  String privacyControllerText(String name, String email) {
+    return '$name\nContatto: $email';
+  }
+
+  @override
+  String get privacyDataTitle => '2. Dati che raccogliamo';
+
+  @override
+  String get privacyDataText =>
+      'Fivelink non raccoglie dati personali. Sul dispositivo salva soltanto:\n• i progressi della partita del giorno, per riprenderla se chiudi l\'app;\n• le statistiche di gioco (partite giocate e vinte, serie, tentativi per vittoria);\n• le impostazioni (tema, vibrazione, guida già vista).';
+
+  @override
+  String get privacyUseTitle => '3. Come usiamo i dati';
+
+  @override
+  String get privacyUseText =>
+      'Questi dati servono solo a far funzionare il gioco. Non vengono mai usati per profilazione, pubblicità o altri scopi.';
+
+  @override
+  String get privacyStorageTitle => '4. Dove sono conservati';
+
+  @override
+  String get privacyStorageText =>
+      'Tutto resta nella memoria del tuo dispositivo. L\'app non usa server né servizi esterni e non invia nulla in rete: non ha nemmeno il permesso di accedere a Internet.';
+
+  @override
+  String get privacyDeviceTitle => '5. Elaborazione sul dispositivo';
+
+  @override
+  String get privacyDeviceText =>
+      'Il rompicapo di ogni giorno viene generato sul dispositivo a partire dalla data. Quando tocchi Condividi, il testo del risultato (numero del rompicapo e un simbolo per tentativo, senza la soluzione) viene passato all\'app che scegli tu, secondo le norme di quell\'app.';
+
+  @override
+  String get privacyPermissionsTitle => '6. Permessi';
+
+  @override
+  String get privacyPermissionsText =>
+      'Fivelink non richiede permessi. Non accede a fotocamera, foto, posizione, contatti, microfono o Internet.';
+
+  @override
+  String get privacyRetentionTitle => '7. Conservazione e cancellazione';
+
+  @override
+  String get privacyRetentionText =>
+      'Le partite dei singoli giorni vengono eliminate automaticamente dopo 7 giorni. Statistiche e impostazioni restano finché non le cancelli. Puoi eliminare tutti i dati dalle impostazioni di Android (App > Fivelink > Spazio di archiviazione > Cancella dati) oppure disinstallando l\'app.';
+
+  @override
+  String get privacyRightsTitle => '8. I tuoi diritti';
+
+  @override
+  String privacyRightsText(String email) {
+    return 'Poiché nessun dato lascia il tuo dispositivo, ne hai sempre il pieno controllo. Per qualsiasi domanda puoi scrivere a $email. Hai inoltre il diritto di presentare un reclamo all\'autorità per la protezione dei dati del tuo paese.';
+  }
+
+  @override
+  String get privacyChildrenTitle => '9. Minori';
+
+  @override
+  String get privacyChildrenText =>
+      'Fivelink è adatta a tutte le età e non raccoglie dati personali di nessuno, minori compresi.';
+
+  @override
+  String get privacyChangesTitle => '10. Modifiche';
+
+  @override
+  String get privacyChangesText =>
+      'Se questa informativa cambia, la nuova versione sarà disponibile nell\'app e online, con la data di aggiornamento.';
 }

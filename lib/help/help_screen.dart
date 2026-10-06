@@ -20,7 +20,11 @@ const List<Operation> _exampleSolution = [
 
 /// Come si gioca. Mostrata al primo avvio e richiamabile dalla barra in alto.
 class HelpScreen extends StatelessWidget {
-  const HelpScreen({super.key});
+  const HelpScreen({super.key, this.firstLaunch = false});
+
+  /// Al primo avvio non c'è la freccia indietro: si entra nel gioco con
+  /// "Gioca".
+  final bool firstLaunch;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,10 @@ class HelpScreen extends StatelessWidget {
     final ChainResult example = evaluateChain(_exampleStart, _exampleSolution);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.helpTitle)),
+      appBar: AppBar(
+        title: Text(l10n.helpTitle),
+        automaticallyImplyLeading: !firstLaunch,
+      ),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
@@ -84,13 +91,18 @@ class HelpScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(l10n.helpDaily, style: theme.textTheme.bodyLarge),
-            const SizedBox(height: 24),
-            FilledButton(
-              key: const ValueKey('help-play'),
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(l10n.helpPlayButton),
-            ),
           ],
+        ),
+      ),
+      // Fisso in basso: è sempre raggiungibile senza scorrere la guida.
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: FilledButton(
+            key: const ValueKey('help-play'),
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(l10n.helpPlayButton),
+          ),
         ),
       ),
     );
@@ -165,13 +177,14 @@ class _TileRule extends StatelessWidget {
                       margin: const EdgeInsets.only(right: 6),
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.primaryContainer,
+                        color: theme.colorScheme.surfaceContainerLowest,
                         borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: theme.colorScheme.outline),
                       ),
                       child: TileLabel(
                         op,
                         style: theme.textTheme.titleSmall?.copyWith(
-                          color: theme.colorScheme.onPrimaryContainer,
+                          color: theme.colorScheme.onSurface,
                         ),
                       ),
                     ),
@@ -199,8 +212,7 @@ class _OutcomeRule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final Color color = outcomeColor(theme, outcome);
+    final Color color = outcomeColor(context, outcome);
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(

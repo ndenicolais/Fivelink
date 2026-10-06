@@ -124,9 +124,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpTooltip => 'How to play';
 
   @override
-  String get statsTooltip => 'Statistics';
-
-  @override
   String get helpTitle => 'How to play';
 
   @override
@@ -226,4 +223,147 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shareButton => 'Share';
+
+  @override
+  String get infoTooltip => 'Info and settings';
+
+  @override
+  String get infoTitle => 'Info and settings';
+
+  @override
+  String get infoStatsSubtitle => 'Games, wins and streaks';
+
+  @override
+  String get settingsSection => 'Settings';
+
+  @override
+  String get settingsTheme => 'Theme';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get settingsHaptics => 'Vibration';
+
+  @override
+  String get settingsHapticsSubtitle =>
+      'When you place tiles and see the result';
+
+  @override
+  String get infoAboutSection => 'About';
+
+  @override
+  String get appDescription =>
+      'A number puzzle a day: put 5 operation tiles in order to turn the start number into the target. Works entirely offline.';
+
+  @override
+  String get infoVersion => 'Version';
+
+  @override
+  String get infoDeveloper => 'Developer';
+
+  @override
+  String get infoEmail => 'Email';
+
+  @override
+  String get infoWebsite => 'Website';
+
+  @override
+  String get copyTooltip => 'Copy';
+
+  @override
+  String get copiedMessage => 'Copied to clipboard';
+
+  @override
+  String get privacyTitle => 'Privacy policy';
+
+  @override
+  String privacyLastUpdated(String date) {
+    return 'Last updated: $date';
+  }
+
+  @override
+  String get privacyOnline => 'Online version';
+
+  @override
+  String get privacyIntro =>
+      'Fivelink is a puzzle game that works entirely offline. It needs no account, shows no ads, uses no analytics and does not collect or sell personal data.';
+
+  @override
+  String get privacyControllerTitle => '1. Data controller';
+
+  @override
+  String privacyControllerText(String name, String email) {
+    return '$name\nContact: $email';
+  }
+
+  @override
+  String get privacyDataTitle => '2. Data we collect';
+
+  @override
+  String get privacyDataText =>
+      'Fivelink does not collect personal data. On your device it only stores:\n• the progress of the daily game, so you can resume it if you close the app;\n• your game statistics (games played and won, streaks, attempts per win);\n• your settings (theme, vibration, guide already seen).';
+
+  @override
+  String get privacyUseTitle => '3. How we use data';
+
+  @override
+  String get privacyUseText =>
+      'This data is only used to make the game work. It is never used for profiling, advertising or any other purpose.';
+
+  @override
+  String get privacyStorageTitle => '4. Where it is stored';
+
+  @override
+  String get privacyStorageText =>
+      'Everything stays in your device\'s storage. The app uses no servers or external services and sends nothing over the network: it does not even have permission to access the Internet.';
+
+  @override
+  String get privacyDeviceTitle => '5. On-device processing';
+
+  @override
+  String get privacyDeviceText =>
+      'Each daily puzzle is generated on your device from the date. When you tap Share, the result text (puzzle number and one symbol per attempt, without the solution) is handed to the app you choose, under that app\'s own policy.';
+
+  @override
+  String get privacyPermissionsTitle => '6. Permissions';
+
+  @override
+  String get privacyPermissionsText =>
+      'Fivelink asks for no permissions. It does not access your camera, photos, location, contacts, microphone or the Internet.';
+
+  @override
+  String get privacyRetentionTitle => '7. Retention and deletion';
+
+  @override
+  String get privacyRetentionText =>
+      'Saved daily games are deleted automatically after 7 days. Statistics and settings are kept until you delete them. You can erase all data from your Android settings (Apps > Fivelink > Storage > Clear data) or by uninstalling the app.';
+
+  @override
+  String get privacyRightsTitle => '8. Your rights';
+
+  @override
+  String privacyRightsText(String email) {
+    return 'Since no data leaves your device, you are always in full control of it. For any question you can write to $email. You also have the right to lodge a complaint with the data protection authority of your country.';
+  }
+
+  @override
+  String get privacyChildrenTitle => '9. Children';
+
+  @override
+  String get privacyChildrenText =>
+      'Fivelink is suitable for all ages and collects no personal data from anyone, children included.';
+
+  @override
+  String get privacyChangesTitle => '10. Changes';
+
+  @override
+  String get privacyChangesText =>
+      'If this policy changes, the new version will be available in the app and online, with its update date.';
 }

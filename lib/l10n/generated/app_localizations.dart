@@ -266,12 +266,6 @@ abstract class AppLocalizations {
   /// **'How to play'**
   String get helpTooltip;
 
-  /// App bar button that opens the statistics
-  ///
-  /// In en, this message translates to:
-  /// **'Statistics'**
-  String get statsTooltip;
-
   /// Title of the guide screen
   ///
   /// In en, this message translates to:
@@ -439,6 +433,258 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Share'**
   String get shareButton;
+
+  /// App bar button that opens the info and settings page
+  ///
+  /// In en, this message translates to:
+  /// **'Info and settings'**
+  String get infoTooltip;
+
+  /// Title of the info and settings page
+  ///
+  /// In en, this message translates to:
+  /// **'Info and settings'**
+  String get infoTitle;
+
+  /// Subtitle of the statistics entry
+  ///
+  /// In en, this message translates to:
+  /// **'Games, wins and streaks'**
+  String get infoStatsSubtitle;
+
+  /// Section heading
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsSection;
+
+  /// Theme setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get settingsTheme;
+
+  /// Theme option: follow the device
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeSystem;
+
+  /// Theme option
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// Theme option
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// Haptic feedback setting
+  ///
+  /// In en, this message translates to:
+  /// **'Vibration'**
+  String get settingsHaptics;
+
+  /// Explains when the device vibrates
+  ///
+  /// In en, this message translates to:
+  /// **'When you place tiles and see the result'**
+  String get settingsHapticsSubtitle;
+
+  /// Section heading
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get infoAboutSection;
+
+  /// Short app description on the info page
+  ///
+  /// In en, this message translates to:
+  /// **'A number puzzle a day: put 5 operation tiles in order to turn the start number into the target. Works entirely offline.'**
+  String get appDescription;
+
+  /// App version label
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get infoVersion;
+
+  /// Developer name label
+  ///
+  /// In en, this message translates to:
+  /// **'Developer'**
+  String get infoDeveloper;
+
+  /// Contact email label
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get infoEmail;
+
+  /// Developer website label
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get infoWebsite;
+
+  /// Copies a value to the clipboard
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copyTooltip;
+
+  /// Shown after copying
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard'**
+  String get copiedMessage;
+
+  /// Privacy policy screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get privacyTitle;
+
+  /// Date of the last policy update
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: {date}'**
+  String privacyLastUpdated(String date);
+
+  /// Label of the public policy address
+  ///
+  /// In en, this message translates to:
+  /// **'Online version'**
+  String get privacyOnline;
+
+  /// Privacy policy introduction
+  ///
+  /// In en, this message translates to:
+  /// **'Fivelink is a puzzle game that works entirely offline. It needs no account, shows no ads, uses no analytics and does not collect or sell personal data.'**
+  String get privacyIntro;
+
+  /// Privacy section title
+  ///
+  /// In en, this message translates to:
+  /// **'1. Data controller'**
+  String get privacyControllerTitle;
+
+  /// Privacy section text
+  ///
+  /// In en, this message translates to:
+  /// **'{name}\nContact: {email}'**
+  String privacyControllerText(String name, String email);
+
+  /// Privacy section title
+  ///
+  /// In en, this message translates to:
+  /// **'2. Data we collect'**
+  String get privacyDataTitle;
+
+  /// Privacy section text
+  ///
+  /// In en, this message translates to:
+  /// **'Fivelink does not collect personal data. On your device it only stores:\n• the progress of the daily game, so you can resume it if you close the app;\n• your game statistics (games played and won, streaks, attempts per win);\n• your settings (theme, vibration, guide already seen).'**
+  String get privacyDataText;
+
+  /// Privacy section title
+  ///
+  /// In en, this message translates to:
+  /// **'3. How we use data'**
+  String get privacyUseTitle;
+
+  /// Privacy section text
+  ///
+  /// In en, this message translates to:
+  /// **'This data is only used to make the game work. It is never used for profiling, advertising or any other purpose.'**
+  String get privacyUseText;
+
+  /// Privacy section title
+  ///
+  /// In en, this message translates to:
+  /// **'4. Where it is stored'**
+  String get privacyStorageTitle;
+
+  /// Privacy section text
+  ///
+  /// In en, this message translates to:
+  /// **'Everything stays in your device\'s storage. The app uses no servers or external services and sends nothing over the network: it does not even have permission to access the Internet.'**
+  String get privacyStorageText;
+
+  /// Privacy section title
+  ///
+  /// In en, this message translates to:
+  /// **'5. On-device processing'**
+  String get privacyDeviceTitle;
+
+  /// Privacy section text
+  ///
+  /// In en, this message translates to:
+  /// **'Each daily puzzle is generated on your device from the date. When you tap Share, the result text (puzzle number and one symbol per attempt, without the solution) is handed to the app you choose, under that app\'s own policy.'**
+  String get privacyDeviceText;
+
+  /// Privacy section title
+  ///
+  /// In en, this message translates to:
+  /// **'6. Permissions'**
+  String get privacyPermissionsTitle;
+
+  /// Privacy section text
+  ///
+  /// In en, this message translates to:
+  /// **'Fivelink asks for no permissions. It does not access your camera, photos, location, contacts, microphone or the Internet.'**
+  String get privacyPermissionsText;
+
+  /// Privacy section title
+  ///
+  /// In en, this message translates to:
+  /// **'7. Retention and deletion'**
+  String get privacyRetentionTitle;
+
+  /// Privacy section text
+  ///
+  /// In en, this message translates to:
+  /// **'Saved daily games are deleted automatically after 7 days. Statistics and settings are kept until you delete them. You can erase all data from your Android settings (Apps > Fivelink > Storage > Clear data) or by uninstalling the app.'**
+  String get privacyRetentionText;
+
+  /// Privacy section title
+  ///
+  /// In en, this message translates to:
+  /// **'8. Your rights'**
+  String get privacyRightsTitle;
+
+  /// Privacy section text
+  ///
+  /// In en, this message translates to:
+  /// **'Since no data leaves your device, you are always in full control of it. For any question you can write to {email}. You also have the right to lodge a complaint with the data protection authority of your country.'**
+  String privacyRightsText(String email);
+
+  /// Privacy section title
+  ///
+  /// In en, this message translates to:
+  /// **'9. Children'**
+  String get privacyChildrenTitle;
+
+  /// Privacy section text
+  ///
+  /// In en, this message translates to:
+  /// **'Fivelink is suitable for all ages and collects no personal data from anyone, children included.'**
+  String get privacyChildrenText;
+
+  /// Privacy section title
+  ///
+  /// In en, this message translates to:
+  /// **'10. Changes'**
+  String get privacyChangesTitle;
+
+  /// Privacy section text
+  ///
+  /// In en, this message translates to:
+  /// **'If this policy changes, the new version will be available in the app and online, with its update date.'**
+  String get privacyChangesText;
 }
 
 class _AppLocalizationsDelegate

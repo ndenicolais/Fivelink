@@ -64,7 +64,7 @@ class TileButton extends StatelessWidget {
       return ExcludeSemantics(
         child: _Box(
           color: Colors.transparent,
-          border: BorderSide(color: colors.outlineVariant),
+          border: BorderSide(color: colors.outline),
         ),
       );
     }
@@ -75,12 +75,13 @@ class TileButton extends StatelessWidget {
       hint: l10n.tileHint,
       excludeSemantics: true,
       child: _Box(
-        color: colors.primaryContainer,
+        color: colors.surfaceContainerLowest,
+        border: BorderSide(color: colors.outline),
         onTap: onTap,
         child: TileLabel(
           operation,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            color: colors.onPrimaryContainer,
+            color: colors.onSurface,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -116,22 +117,20 @@ class SlotButton extends StatelessWidget {
       hint: op == null ? null : l10n.slotHint,
       excludeSemantics: true,
       child: _Box(
-        color: op == null
-            ? colors.surfaceContainerHighest
-            : colors.secondaryContainer,
-        border: BorderSide(color: colors.outline, width: op == null ? 1 : 2),
+        color: op == null ? Colors.transparent : colors.primary,
+        border: op == null ? BorderSide(color: colors.outline) : null,
         onTap: op == null ? null : onTap,
         child: op == null
             ? Text(
                 '${index + 1}',
-                style: Theme.of(
-                  context,
-                ).textTheme.labelLarge?.copyWith(color: colors.outline),
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: colors.onSurfaceVariant,
+                ),
               )
             : TileLabel(
                 op,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: colors.onSecondaryContainer,
+                  color: colors.onPrimary,
                   fontWeight: FontWeight.w600,
                 ),
               ),

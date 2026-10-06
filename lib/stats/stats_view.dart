@@ -106,9 +106,7 @@ class _Bar extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colors = theme.colorScheme;
-    final Color fill = highlight
-        ? colors.primary
-        : colors.surfaceContainerHighest;
+    final Color fill = highlight ? colors.primary : colors.outline;
     final Color onFill = highlight ? colors.onPrimary : colors.onSurface;
     return Semantics(
       label: AppLocalizations.of(context).statsBarSemantics(attempt, count),
@@ -150,42 +148,4 @@ class _Bar extends StatelessWidget {
       ),
     );
   }
-}
-
-/// Statistiche in un pannello dal basso, richiamabile dalla barra in alto.
-Future<void> showStatsSheet(
-  BuildContext context, {
-  required Stats stats,
-  required int currentStreak,
-  int? highlightAttempts,
-}) {
-  return showModalBottomSheet<void>(
-    context: context,
-    showDragHandle: true,
-    isScrollControlled: true,
-    builder: (context) => SafeArea(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Semantics(
-              header: true,
-              child: Text(
-                AppLocalizations.of(context).statsTitle,
-                style: Theme.of(context).textTheme.titleLarge,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: 16),
-            StatsView(
-              stats: stats,
-              currentStreak: currentStreak,
-              highlightAttempts: highlightAttempts,
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
 }

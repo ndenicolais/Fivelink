@@ -184,10 +184,6 @@
   "@helpTooltip": {
     "description": "App bar button that opens the guide"
   },
-  "statsTooltip": "Statistics",
-  "@statsTooltip": {
-    "description": "App bar button that opens the statistics"
-  },
   "helpTitle": "How to play",
   "@helpTitle": {
     "description": "Title of the guide screen"
@@ -315,5 +311,191 @@
   "shareButton": "Share",
   "@shareButton": {
     "description": "Shares the result as text"
+  },
+  "infoTooltip": "Info and settings",
+  "@infoTooltip": {
+    "description": "App bar button that opens the info and settings page"
+  },
+  "infoTitle": "Info and settings",
+  "@infoTitle": {
+    "description": "Title of the info and settings page"
+  },
+  "infoStatsSubtitle": "Games, wins and streaks",
+  "@infoStatsSubtitle": {
+    "description": "Subtitle of the statistics entry"
+  },
+  "settingsSection": "Settings",
+  "@settingsSection": {
+    "description": "Section heading"
+  },
+  "settingsTheme": "Theme",
+  "@settingsTheme": {
+    "description": "Theme setting label"
+  },
+  "themeSystem": "System",
+  "@themeSystem": {
+    "description": "Theme option: follow the device"
+  },
+  "themeLight": "Light",
+  "@themeLight": {
+    "description": "Theme option"
+  },
+  "themeDark": "Dark",
+  "@themeDark": {
+    "description": "Theme option"
+  },
+  "settingsHaptics": "Vibration",
+  "@settingsHaptics": {
+    "description": "Haptic feedback setting"
+  },
+  "settingsHapticsSubtitle": "When you place tiles and see the result",
+  "@settingsHapticsSubtitle": {
+    "description": "Explains when the device vibrates"
+  },
+  "infoAboutSection": "About",
+  "@infoAboutSection": {
+    "description": "Section heading"
+  },
+  "appDescription": "A number puzzle a day: put 5 operation tiles in order to turn the start number into the target. Works entirely offline.",
+  "@appDescription": {
+    "description": "Short app description on the info page"
+  },
+  "infoVersion": "Version",
+  "@infoVersion": {
+    "description": "App version label"
+  },
+  "infoDeveloper": "Developer",
+  "@infoDeveloper": {
+    "description": "Developer name label"
+  },
+  "infoEmail": "Email",
+  "@infoEmail": {
+    "description": "Contact email label"
+  },
+  "infoWebsite": "Website",
+  "@infoWebsite": {
+    "description": "Developer website label"
+  },
+  "copyTooltip": "Copy",
+  "@copyTooltip": {
+    "description": "Copies a value to the clipboard"
+  },
+  "copiedMessage": "Copied to clipboard",
+  "@copiedMessage": {
+    "description": "Shown after copying"
+  },
+  "privacyTitle": "Privacy policy",
+  "@privacyTitle": {
+    "description": "Privacy policy screen title"
+  },
+  "privacyLastUpdated": "Last updated: {date}",
+  "@privacyLastUpdated": {
+    "description": "Date of the last policy update",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyOnline": "Online version",
+  "@privacyOnline": {
+    "description": "Label of the public policy address"
+  },
+  "privacyIntro": "Fivelink is a puzzle game that works entirely offline. It needs no account, shows no ads, uses no analytics and does not collect or sell personal data.",
+  "@privacyIntro": {
+    "description": "Privacy policy introduction"
+  },
+  "privacyControllerTitle": "1. Data controller",
+  "@privacyControllerTitle": {
+    "description": "Privacy section title"
+  },
+  "privacyControllerText": "{name}\nContact: {email}",
+  "@privacyControllerText": {
+    "description": "Privacy section text",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyDataTitle": "2. Data we collect",
+  "@privacyDataTitle": {
+    "description": "Privacy section title"
+  },
+  "privacyDataText": "Fivelink does not collect personal data. On your device it only stores:\n• the progress of the daily game, so you can resume it if you close the app;\n• your game statistics (games played and won, streaks, attempts per win);\n• your settings (theme, vibration, guide already seen).",
+  "@privacyDataText": {
+    "description": "Privacy section text"
+  },
+  "privacyUseTitle": "3. How we use data",
+  "@privacyUseTitle": {
+    "description": "Privacy section title"
+  },
+  "privacyUseText": "This data is only used to make the game work. It is never used for profiling, advertising or any other purpose.",
+  "@privacyUseText": {
+    "description": "Privacy section text"
+  },
+  "privacyStorageTitle": "4. Where it is stored",
+  "@privacyStorageTitle": {
+    "description": "Privacy section title"
+  },
+  "privacyStorageText": "Everything stays in your device's storage. The app uses no servers or external services and sends nothing over the network: it does not even have permission to access the Internet.",
+  "@privacyStorageText": {
+    "description": "Privacy section text"
+  },
+  "privacyDeviceTitle": "5. On-device processing",
+  "@privacyDeviceTitle": {
+    "description": "Privacy section title"
+  },
+  "privacyDeviceText": "Each daily puzzle is generated on your device from the date. When you tap Share, the result text (puzzle number and one symbol per attempt, without the solution) is handed to the app you choose, under that app's own policy.",
+  "@privacyDeviceText": {
+    "description": "Privacy section text"
+  },
+  "privacyPermissionsTitle": "6. Permissions",
+  "@privacyPermissionsTitle": {
+    "description": "Privacy section title"
+  },
+  "privacyPermissionsText": "Fivelink asks for no permissions. It does not access your camera, photos, location, contacts, microphone or the Internet.",
+  "@privacyPermissionsText": {
+    "description": "Privacy section text"
+  },
+  "privacyRetentionTitle": "7. Retention and deletion",
+  "@privacyRetentionTitle": {
+    "description": "Privacy section title"
+  },
+  "privacyRetentionText": "Saved daily games are deleted automatically after 7 days. Statistics and settings are kept until you delete them. You can erase all data from your Android settings (Apps > Fivelink > Storage > Clear data) or by uninstalling the app.",
+  "@privacyRetentionText": {
+    "description": "Privacy section text"
+  },
+  "privacyRightsTitle": "8. Your rights",
+  "@privacyRightsTitle": {
+    "description": "Privacy section title"
+  },
+  "privacyRightsText": "Since no data leaves your device, you are always in full control of it. For any question you can write to {email}. You also have the right to lodge a complaint with the data protection authority of your country.",
+  "@privacyRightsText": {
+    "description": "Privacy section text",
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "privacyChildrenTitle": "9. Children",
+  "@privacyChildrenTitle": {
+    "description": "Privacy section title"
+  },
+  "privacyChildrenText": "Fivelink is suitable for all ages and collects no personal data from anyone, children included.",
+  "@privacyChildrenText": {
+    "description": "Privacy section text"
+  },
+  "privacyChangesTitle": "10. Changes",
+  "@privacyChangesTitle": {
+    "description": "Privacy section title"
+  },
+  "privacyChangesText": "If this policy changes, the new version will be available in the app and online, with its update date.",
+  "@privacyChangesText": {
+    "description": "Privacy section text"
   }
 }

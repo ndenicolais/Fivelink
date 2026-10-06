@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../app_theme.dart';
 import '../../core/chain.dart';
 import '../../core/operation.dart';
 import '../../core/puzzle.dart';
@@ -20,11 +21,11 @@ IconData outcomeIcon(AttemptOutcome outcome) => switch (outcome) {
   AttemptOutcome.solved => Icons.check_circle,
 };
 
-Color outcomeColor(ThemeData theme, AttemptOutcome outcome) =>
+Color outcomeColor(BuildContext context, AttemptOutcome outcome) =>
     switch (outcome) {
-      AttemptOutcome.broken => theme.colorScheme.error,
-      AttemptOutcome.wrongResult => theme.colorScheme.tertiary,
-      AttemptOutcome.solved => theme.colorScheme.primary,
+      AttemptOutcome.broken => GameColors.of(context).broken,
+      AttemptOutcome.wrongResult => GameColors.of(context).wrongResult,
+      AttemptOutcome.solved => GameColors.of(context).solved,
     };
 
 /// Una catena: per ogni tessera la sua etichetta e il valore ottenuto.
@@ -83,7 +84,7 @@ class ChainRow extends StatelessWidget {
                       : Text(
                           '$number',
                           style: theme.textTheme.labelLarge?.copyWith(
-                            color: theme.colorScheme.outline,
+                            color: theme.colorScheme.onSurfaceVariant,
                           ),
                         ),
                 ),
@@ -101,14 +102,14 @@ class ChainRow extends StatelessWidget {
                     Icon(
                       outcomeIcon(outcome),
                       size: 18,
-                      color: outcomeColor(theme, outcome),
+                      color: outcomeColor(context, outcome),
                     ),
                     const SizedBox(width: 6),
                     Flexible(
                       child: Text(
                         outcomeText,
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: outcomeColor(theme, outcome),
+                          color: outcomeColor(context, outcome),
                         ),
                       ),
                     ),
@@ -125,6 +126,7 @@ class ChainRow extends StatelessWidget {
   Widget _cell(BuildContext context, int i) {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colors = theme.colorScheme;
+    final GameColors game = GameColors.of(context);
     final bool shown = i < revealed;
     final bool isBreak = result.brokenAt == i;
     final bool afterBreak = result.brokenAt != null && i > result.brokenAt!;
@@ -133,7 +135,7 @@ class ChainRow extends StatelessWidget {
     if (!shown || afterBreak) {
       value = Text('·', style: theme.textTheme.titleMedium);
     } else if (isBreak) {
-      value = Icon(Icons.close, color: colors.error, size: 22);
+      value = Icon(Icons.close, color: game.broken, size: 22);
     } else {
       final int v = result.values[i];
       final bool hit =
@@ -142,7 +144,7 @@ class ChainRow extends StatelessWidget {
         '$v',
         style: theme.textTheme.titleMedium?.copyWith(
           fontWeight: hit ? FontWeight.w800 : FontWeight.w500,
-          color: hit ? colors.primary : null,
+          color: hit ? game.solved : null,
         ),
       );
     }
@@ -158,11 +160,11 @@ class ChainRow extends StatelessWidget {
               height: 32,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: colors.surfaceContainerHigh,
+                color: colors.surfaceContainerLowest,
                 borderRadius: BorderRadius.circular(8),
                 border: isBreak && shown
-                    ? Border.all(color: colors.error, width: 2)
-                    : null,
+                    ? Border.all(color: game.broken, width: 2)
+                    : Border.all(color: colors.outline),
               ),
               child: TileLabel(tiles[i], style: theme.textTheme.titleSmall),
             ),

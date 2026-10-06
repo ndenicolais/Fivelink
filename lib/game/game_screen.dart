@@ -1,24 +1,32 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../app_theme.dart';
 import '../core/daily.dart';
 import '../core/puzzle.dart';
-import '../data/models.dart';
+import '../data/settings_controller.dart';
 import '../data/storage.dart';
 import '../help/help_screen.dart';
+import '../info/info_screen.dart';
 import '../l10n/generated/app_localizations.dart';
-import '../stats/stats_view.dart';
 import 'game_controller.dart';
 import 'widgets/chain_row.dart';
 import 'widgets/game_over_panel.dart';
 import 'widgets/tile_view.dart';
 
 class GameScreen extends StatefulWidget {
-  const GameScreen({super.key, required this.storage, required this.clock});
+  const GameScreen({
+    super.key,
+    required this.storage,
+    required this.settings,
+    required this.clock,
+  });
 
   final Storage storage;
+  final SettingsController settings;
   final Clock clock;
 
   @override
@@ -42,8 +50,10 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _scheduleMidnight();
-    if (!widget.storage.loadSettings().helpSeen) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => _openHelp());
+    if (!widget.settings.settings.helpSeen) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _openHelp(firstLaunch: true),
+      );
     }
   }
 
@@ -78,27 +88,31 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
     _scheduleMidnight();
   }
 
-  Future<void> _openHelp() async {
-    await Navigator.of(
-      context,
-    ).push(MaterialPageRoute<void>(builder: (_) => const HelpScreen()));
-    final Settings settings = widget.storage.loadSettings();
-    if (!settings.helpSeen) {
-      await widget.storage.saveSettings(settings.copyWith(helpSeen: true));
-    }
-  }
-
-  void _openStats() {
-    unawaited(
-      showStatsSheet(
-        context,
-        stats: _controller.stats,
-        currentStreak: _controller.currentStreak,
-        highlightAttempts: _controller.status == GameStatus.won
-            ? _controller.attempts.length
-            : null,
+  Future<void> _openHelp({bool firstLaunch = false}) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => HelpScreen(firstLaunch: firstLaunch),
       ),
     );
+    widget.settings.markHelpSeen();
+  }
+
+  void _openInfo() {
+    unawaited(
+      Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          builder: (_) =>
+              InfoScreen(settings: widget.settings, game: _controller),
+        ),
+      ),
+    );
+  }
+
+  /// Vibrazione leggera al tocco di tessere e slot, se attiva.
+  void _tapFeedback() {
+    if (widget.settings.settings.haptics) {
+      unawaited(HapticFeedback.selectionClick());
+    }
   }
 
   void _share() {
@@ -114,6 +128,14 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
   }
 
   void _onRevealed() {
+    if (widget.settings.settings.haptics) {
+      // Più forte per la vittoria che per un tentativo sbagliato.
+      final bool solved =
+          _controller.attempts.last.outcome == AttemptOutcome.solved;
+      unawaited(
+        solved ? HapticFeedback.heavyImpact() : HapticFeedback.lightImpact(),
+      );
+    }
     setState(() => _revealing = null);
     _scrollToEnd();
   }
@@ -148,10 +170,10 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
             ),
             actions: [
               IconButton(
-                key: const ValueKey('open-stats'),
-                tooltip: l10n.statsTooltip,
-                icon: const Icon(Icons.bar_chart),
-                onPressed: _openStats,
+                key: const ValueKey('open-info'),
+                tooltip: l10n.infoTooltip,
+                icon: const Icon(Icons.settings_outlined),
+                onPressed: _openInfo,
               ),
             ],
           ),
@@ -169,6 +191,7 @@ class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
                       controller: _controller,
                       enabled: _revealing == null,
                       onSubmit: _submit,
+                      onTapFeedback: _tapFeedback,
                     ),
                   ],
                 ],
@@ -276,27 +299,32 @@ class _NumberCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final ColorScheme colors = theme.colorScheme;
+    final GameColors game = GameColors.of(context);
     return Semantics(
       label: '$label $value',
       excludeSemantics: true,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         decoration: BoxDecoration(
-          color: highlight
-              ? colors.tertiaryContainer
-              : colors.surfaceContainerHigh,
+          color: highlight ? game.accent : colors.surfaceContainerLowest,
+          border: highlight ? null : Border.all(color: colors.outline),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           children: [
-            Text(label, style: theme.textTheme.labelLarge),
+            Text(
+              label,
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: highlight ? game.onAccent : null,
+              ),
+            ),
             FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
                 '$value',
                 style: theme.textTheme.displaySmall?.copyWith(
                   fontWeight: FontWeight.w700,
-                  color: highlight ? colors.onTertiaryContainer : null,
+                  color: highlight ? game.onAccent : null,
                 ),
               ),
             ),
@@ -313,11 +341,13 @@ class _InputArea extends StatelessWidget {
     required this.controller,
     required this.enabled,
     required this.onSubmit,
+    required this.onTapFeedback,
   });
 
   final GameController controller;
   final bool enabled;
   final VoidCallback onSubmit;
+  final VoidCallback onTapFeedback;
 
   @override
   Widget build(BuildContext context) {
@@ -351,7 +381,12 @@ class _InputArea extends StatelessWidget {
                 key: ValueKey('slot-$s'),
                 index: s,
                 operation: slots[s] == null ? null : puzzle.tiles[slots[s]!],
-                onTap: enabled ? () => controller.clearSlot(s) : null,
+                onTap: enabled
+                    ? () {
+                        onTapFeedback();
+                        controller.clearSlot(s);
+                      }
+                    : null,
               ),
           ]),
           const SizedBox(height: 16),
@@ -361,7 +396,12 @@ class _InputArea extends StatelessWidget {
                 key: ValueKey('tile-$t'),
                 operation: puzzle.tiles[t],
                 used: controller.isTileUsed(t),
-                onTap: enabled ? () => controller.placeTile(t) : null,
+                onTap: enabled
+                    ? () {
+                        onTapFeedback();
+                        controller.placeTile(t);
+                      }
+                    : null,
               ),
           ]),
           const SizedBox(height: 16),

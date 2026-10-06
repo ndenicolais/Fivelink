@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'app_theme.dart';
 import 'core/daily.dart';
+import 'data/models.dart';
+import 'data/settings_controller.dart';
 import 'data/storage.dart';
 import 'game/game_screen.dart';
 import 'l10n/generated/app_localizations.dart';
 
-class FivelinkApp extends StatelessWidget {
+class FivelinkApp extends StatefulWidget {
   const FivelinkApp({
     super.key,
     required this.storage,
@@ -18,21 +21,39 @@ class FivelinkApp extends StatelessWidget {
   final Clock clock;
 
   @override
+  State<FivelinkApp> createState() => _FivelinkAppState();
+}
+
+class _FivelinkAppState extends State<FivelinkApp> {
+  late final SettingsController _settings = SettingsController(widget.storage);
+
+  @override
+  void dispose() {
+    _settings.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.teal,
-          brightness: Brightness.dark,
+    return ListenableBuilder(
+      listenable: _settings,
+      builder: (context, _) => MaterialApp(
+        onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        themeMode: switch (_settings.settings.theme) {
+          ThemePreference.system => ThemeMode.system,
+          ThemePreference.light => ThemeMode.light,
+          ThemePreference.dark => ThemeMode.dark,
+        },
+        home: GameScreen(
+          storage: widget.storage,
+          settings: _settings,
+          clock: widget.clock,
         ),
       ),
-      home: GameScreen(storage: storage, clock: clock),
     );
   }
 }
