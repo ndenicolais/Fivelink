@@ -43,6 +43,13 @@ class _FivelinkAppState extends State<FivelinkApp> {
         supportedLocales: AppLocalizations.supportedLocales,
         theme: lightTheme,
         darkTheme: darkTheme,
+        // null = lingua del dispositivo; se non è supportata vale l'inglese,
+        // il primo di supportedLocales.
+        locale: switch (_settings.settings.language) {
+          LanguagePreference.system => null,
+          LanguagePreference.italian => const Locale('it'),
+          LanguagePreference.english => const Locale('en'),
+        },
         themeMode: switch (_settings.settings.theme) {
           ThemePreference.system => ThemeMode.system,
           ThemePreference.light => ThemeMode.light,

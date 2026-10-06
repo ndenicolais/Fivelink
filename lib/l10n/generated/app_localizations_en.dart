@@ -308,7 +308,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get privacyDataText =>
-      'Fivelink does not collect personal data. On your device it only stores:\n• the progress of the daily game, so you can resume it if you close the app;\n• your game statistics (games played and won, streaks, attempts per win);\n• your settings (theme, vibration, guide already seen).';
+      'Fivelink does not collect personal data. On your device it only stores:\n• the progress of the daily game, so you can resume it if you close the app;\n• your game statistics (games played and won, streaks, attempts per win);\n• your settings (theme, language, vibration, guide already seen).';
 
   @override
   String get privacyUseTitle => '3. How we use data';
@@ -366,4 +366,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get privacyChangesText =>
       'If this policy changes, the new version will be available in the app and online, with its update date.';
+
+  @override
+  String get settingsLanguage => 'Language';
+
+  @override
+  String get languageSystem => 'System';
+
+  @override
+  String get languageItalian => 'Italiano';
+
+  @override
+  String get languageEnglish => 'English';
 }

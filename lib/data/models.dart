@@ -165,28 +165,40 @@ final class Stats {
 
 enum ThemePreference { system, light, dark }
 
+/// Lingua dell'app: quella del dispositivo (con l'inglese come ripiego) oppure
+/// una scelta a mano.
+enum LanguagePreference { system, italian, english }
+
 final class Settings {
   const Settings({
     this.theme = ThemePreference.system,
+    this.language = LanguagePreference.system,
     this.haptics = true,
     this.helpSeen = false,
   });
 
   final ThemePreference theme;
+  final LanguagePreference language;
   final bool haptics;
 
   /// La guida è già stata mostrata al primo avvio.
   final bool helpSeen;
 
-  Settings copyWith({ThemePreference? theme, bool? haptics, bool? helpSeen}) =>
-      Settings(
-        theme: theme ?? this.theme,
-        haptics: haptics ?? this.haptics,
-        helpSeen: helpSeen ?? this.helpSeen,
-      );
+  Settings copyWith({
+    ThemePreference? theme,
+    LanguagePreference? language,
+    bool? haptics,
+    bool? helpSeen,
+  }) => Settings(
+    theme: theme ?? this.theme,
+    language: language ?? this.language,
+    haptics: haptics ?? this.haptics,
+    helpSeen: helpSeen ?? this.helpSeen,
+  );
 
   Map<String, Object?> toJson() => {
     'theme': theme.name,
+    'language': language.name,
     'haptics': haptics,
     'helpSeen': helpSeen,
   };
@@ -199,6 +211,10 @@ final class Settings {
       theme:
           _enumByName(ThemePreference.values, json['theme']) ??
           ThemePreference.system,
+      // Assente nelle impostazioni salvate prima che esistesse: vale "sistema".
+      language:
+          _enumByName(LanguagePreference.values, json['language']) ??
+          LanguagePreference.system,
       haptics: haptics is bool ? haptics : true,
       helpSeen: helpSeen is bool && helpSeen,
     );

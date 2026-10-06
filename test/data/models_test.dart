@@ -125,16 +125,23 @@ void main() {
     test('Settings round trip and defaults', () {
       const Settings s = Settings(
         theme: ThemePreference.dark,
+        language: LanguagePreference.italian,
         haptics: false,
         helpSeen: true,
       );
       final Settings back = Settings.fromJson(jsonDecode(jsonEncode(s)));
       expect(back.theme, ThemePreference.dark);
+      expect(back.language, LanguagePreference.italian);
       expect(back.haptics, isFalse);
       expect(back.helpSeen, isTrue);
 
       final Settings defaults = Settings.fromJson({'theme': 'neon'});
       expect(defaults.theme, ThemePreference.system);
+      expect(
+        defaults.language,
+        LanguagePreference.system,
+        reason: 'settings saved before the language option existed',
+      );
       expect(defaults.haptics, isTrue);
       expect(defaults.helpSeen, isFalse);
     });

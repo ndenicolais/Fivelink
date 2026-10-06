@@ -587,7 +587,7 @@ abstract class AppLocalizations {
   /// Privacy section text
   ///
   /// In en, this message translates to:
-  /// **'Fivelink does not collect personal data. On your device it only stores:\n• the progress of the daily game, so you can resume it if you close the app;\n• your game statistics (games played and won, streaks, attempts per win);\n• your settings (theme, vibration, guide already seen).'**
+  /// **'Fivelink does not collect personal data. On your device it only stores:\n• the progress of the daily game, so you can resume it if you close the app;\n• your game statistics (games played and won, streaks, attempts per win);\n• your settings (theme, language, vibration, guide already seen).'**
   String get privacyDataText;
 
   /// Privacy section title
@@ -685,6 +685,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'If this policy changes, the new version will be available in the app and online, with its update date.'**
   String get privacyChangesText;
+
+  /// Language setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingsLanguage;
+
+  /// Language option: follow the device
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get languageSystem;
+
+  /// Language option, always written in Italian
+  ///
+  /// In en, this message translates to:
+  /// **'Italiano'**
+  String get languageItalian;
+
+  /// Language option, always written in English
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
 }
 
 class _AppLocalizationsDelegate

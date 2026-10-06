@@ -425,7 +425,7 @@
   "@privacyDataTitle": {
     "description": "Privacy section title"
   },
-  "privacyDataText": "Fivelink does not collect personal data. On your device it only stores:\n• the progress of the daily game, so you can resume it if you close the app;\n• your game statistics (games played and won, streaks, attempts per win);\n• your settings (theme, vibration, guide already seen).",
+  "privacyDataText": "Fivelink does not collect personal data. On your device it only stores:\n• the progress of the daily game, so you can resume it if you close the app;\n• your game statistics (games played and won, streaks, attempts per win);\n• your settings (theme, language, vibration, guide already seen).",
   "@privacyDataText": {
     "description": "Privacy section text"
   },
@@ -497,5 +497,21 @@
   "privacyChangesText": "If this policy changes, the new version will be available in the app and online, with its update date.",
   "@privacyChangesText": {
     "description": "Privacy section text"
+  },
+  "settingsLanguage": "Language",
+  "@settingsLanguage": {
+    "description": "Language setting label"
+  },
+  "languageSystem": "System",
+  "@languageSystem": {
+    "description": "Language option: follow the device"
+  },
+  "languageItalian": "Italiano",
+  "@languageItalian": {
+    "description": "Language option, always written in Italian"
+  },
+  "languageEnglish": "English",
+  "@languageEnglish": {
+    "description": "Language option, always written in English"
   }
 }

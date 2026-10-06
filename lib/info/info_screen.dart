@@ -70,6 +70,32 @@ class InfoScreen extends StatelessWidget {
                 onSelectionChanged: (selection) =>
                     settings.setTheme(selection.single),
               ),
+              const SizedBox(height: 16),
+              Text(l10n.settingsLanguage, style: theme.textTheme.bodyLarge),
+              const SizedBox(height: 8),
+              SegmentedButton<LanguagePreference>(
+                key: const ValueKey('language-selector'),
+                showSelectedIcon: false,
+                segments: [
+                  ButtonSegment(
+                    value: LanguagePreference.system,
+                    icon: const Icon(Icons.phone_android),
+                    label: Text(l10n.languageSystem),
+                  ),
+                  // Nomi scritti nella propria lingua, uguali in ogni ARB.
+                  ButtonSegment(
+                    value: LanguagePreference.italian,
+                    label: Text(l10n.languageItalian),
+                  ),
+                  ButtonSegment(
+                    value: LanguagePreference.english,
+                    label: Text(l10n.languageEnglish),
+                  ),
+                ],
+                selected: {settings.settings.language},
+                onSelectionChanged: (selection) =>
+                    settings.setLanguage(selection.single),
+              ),
               const SizedBox(height: 8),
               SwitchListTile(
                 key: const ValueKey('haptics-switch'),
@@ -85,7 +111,9 @@ class InfoScreen extends StatelessWidget {
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: Text(l10n.infoVersion),
-                subtitle: const Text('${AppInfo.version} (${AppInfo.buildNumber})'),
+                subtitle: const Text(
+                  '${AppInfo.version} (${AppInfo.buildNumber})',
+                ),
               ),
               ListTile(
                 contentPadding: EdgeInsets.zero,

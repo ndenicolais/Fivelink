@@ -244,6 +244,39 @@ void main() {
     expect(storage.loadSettings().theme, ThemePreference.dark);
   });
 
+  testWidgets('the language can be changed and is remembered', (tester) async {
+    final Storage storage = await createStorage(helpSeenValues);
+    await _startGame(tester, storage: storage);
+    await openInfo(tester);
+    await tester.tap(find.text('Italiano'));
+    await tester.pumpAndSettle();
+    expect(find.text('Info e impostazioni'), findsOneWidget);
+    expect(storage.loadSettings().language, LanguagePreference.italian);
+
+    await tester.tap(find.text('English'));
+    await tester.pumpAndSettle();
+    expect(find.text('Info and settings'), findsOneWidget);
+
+    await tester.tap(
+      find.descendant(
+        of: find.byKey(const ValueKey('language-selector')),
+        matching: find.text('System'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(storage.loadSettings().language, LanguagePreference.system);
+  });
+
+  testWidgets('unsupported device languages fall back to English', (
+    tester,
+  ) async {
+    tester.platformDispatcher.localesTestValue = const [Locale('fr')];
+    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+    await _startGame(tester);
+    expect(find.text('Start'), findsOneWidget);
+    expect(find.text('Check'), findsOneWidget);
+  });
+
   testWidgets('vibration can be turned off', (tester) async {
     final Storage storage = await createStorage(helpSeenValues);
     await _startGame(tester, storage: storage);

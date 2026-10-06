@@ -17,6 +17,9 @@ class SettingsController extends ChangeNotifier {
   void setTheme(ThemePreference theme) =>
       _update(_settings.copyWith(theme: theme));
 
+  void setLanguage(LanguagePreference language) =>
+      _update(_settings.copyWith(language: language));
+
   void setHaptics(bool enabled) =>
       _update(_settings.copyWith(haptics: enabled));
 
@@ -24,6 +27,7 @@ class SettingsController extends ChangeNotifier {
 
   void _update(Settings next) {
     if (next.theme == _settings.theme &&
+        next.language == _settings.language &&
         next.haptics == _settings.haptics &&
         next.helpSeen == _settings.helpSeen) {
       return;

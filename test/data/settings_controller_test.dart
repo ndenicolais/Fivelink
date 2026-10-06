@@ -14,12 +14,14 @@ void main() {
 
     c.setTheme(ThemePreference.light);
     c.setTheme(ThemePreference.light);
+    c.setLanguage(LanguagePreference.english);
     c.setHaptics(false);
     c.markHelpSeen();
 
-    expect(calls, 3);
+    expect(calls, 4);
     final Settings saved = storage.loadSettings();
     expect(saved.theme, ThemePreference.light);
+    expect(saved.language, LanguagePreference.english);
     expect(saved.haptics, isFalse);
     expect(saved.helpSeen, isTrue);
   });

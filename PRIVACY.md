@@ -21,7 +21,7 @@ Fivelink non raccoglie dati personali. Sul dispositivo salva soltanto:
 
 - i progressi della partita del giorno, per riprenderla se chiudi l'app;
 - le statistiche di gioco (partite giocate e vinte, serie, tentativi per vittoria);
-- le impostazioni (tema, vibrazione, guida già vista).
+- le impostazioni (tema, lingua, vibrazione, guida già vista).
 
 ### 3. Come usiamo i dati
 
@@ -76,7 +76,7 @@ Fivelink does not collect personal data. On your device it only stores:
 
 - the progress of the daily game, so you can resume it if you close the app;
 - your game statistics (games played and won, streaks, attempts per win);
-- your settings (theme, vibration, guide already seen).
+- your settings (theme, language, vibration, guide already seen).
 
 ### 3. How we use data
 

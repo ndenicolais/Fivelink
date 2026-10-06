@@ -309,7 +309,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get privacyDataText =>
-      'Fivelink non raccoglie dati personali. Sul dispositivo salva soltanto:\n• i progressi della partita del giorno, per riprenderla se chiudi l\'app;\n• le statistiche di gioco (partite giocate e vinte, serie, tentativi per vittoria);\n• le impostazioni (tema, vibrazione, guida già vista).';
+      'Fivelink non raccoglie dati personali. Sul dispositivo salva soltanto:\n• i progressi della partita del giorno, per riprenderla se chiudi l\'app;\n• le statistiche di gioco (partite giocate e vinte, serie, tentativi per vittoria);\n• le impostazioni (tema, lingua, vibrazione, guida già vista).';
 
   @override
   String get privacyUseTitle => '3. Come usiamo i dati';
@@ -367,4 +367,16 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get privacyChangesText =>
       'Se questa informativa cambia, la nuova versione sarà disponibile nell\'app e online, con la data di aggiornamento.';
+
+  @override
+  String get settingsLanguage => 'Lingua';
+
+  @override
+  String get languageSystem => 'Sistema';
+
+  @override
+  String get languageItalian => 'Italiano';
+
+  @override
+  String get languageEnglish => 'English';
 }
