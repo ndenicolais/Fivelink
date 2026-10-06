@@ -81,6 +81,17 @@ final class Stats {
 
   int get winPercent => played == 0 ? 0 : (won * 100 / played).round();
 
+  /// Le statistiche avanzano solo in avanti nel tempo: una partita conta solo
+  /// se il suo giorno viene dopo l'ultimo già conteggiato. Così spostare
+  /// indietro la data del telefono (o cambiare fuso) non conta due volte la
+  /// stessa partita e non rompe la serie.
+  bool countsFor(DateTime day) {
+    final DateTime? last = lastCompletedDate == null
+        ? null
+        : parseDateKey(lastCompletedDate!);
+    return last == null || daysBetween(last, day) > 0;
+  }
+
   /// Una vittoria aumenta la serie se l'ultima vittoria è di ieri, altrimenti
   /// la riporta a 1.
   Stats recordWin(DateTime day, int attempts) {

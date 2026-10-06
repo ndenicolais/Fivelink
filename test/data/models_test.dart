@@ -55,6 +55,15 @@ void main() {
       expect(s.currentStreak, 2);
     });
 
+    test('countsFor only accepts days after the last counted one', () {
+      final Stats s = Stats().recordWin(_day(12), 2);
+      expect(s.countsFor(_day(13)), isTrue);
+      expect(s.countsFor(_day(12)), isFalse);
+      expect(s.countsFor(_day(11)), isFalse);
+      expect(Stats().countsFor(_day(1)), isTrue);
+      expect(Stats(lastCompletedDate: 'bad').countsFor(_day(1)), isTrue);
+    });
+
     test('empty stats', () {
       final Stats s = Stats();
       expect(s.winPercent, 0);

@@ -379,4 +379,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get languageEnglish => 'English';
+
+  @override
+  String get helpReplay => 'Rivedi';
 }

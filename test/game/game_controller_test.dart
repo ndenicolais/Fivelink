@@ -270,6 +270,44 @@ void main() {
       expect(c.stats.won, 1);
     });
 
+    test('moving the clock back to a played day does not count it twice', () {
+      _win(_newGame());
+      _clock.current = DateTime(2026, 10, 11, 20);
+      _win(_newGame());
+
+      _clock.current = DateTime(2026, 10, 10, 21);
+      final GameController back = _newGame();
+      expect(back.status, GameStatus.won, reason: 'saved game is restored');
+      expect(back.stats.played, 2);
+      expect(back.stats.won, 2);
+      expect(back.stats.currentStreak, 2);
+    });
+
+    test('a past day played late does not count or break the streak', () {
+      _clock.current = DateTime(2026, 10, 12, 9);
+      _win(_newGame());
+      _clock.current = DateTime(2026, 10, 13, 9);
+      _win(_newGame());
+
+      _clock.current = DateTime(2026, 10, 11, 9);
+      final GameController past = _newGame();
+      _lose(past);
+      expect(past.stats.played, 2);
+      expect(past.stats.currentStreak, 2);
+    });
+
+    test('playing ahead counts, then today no longer does', () {
+      _clock.current = DateTime(2026, 10, 15, 9);
+      _win(_newGame());
+
+      _clock.current = DateTime(2026, 10, 10, 9);
+      final GameController today = _newGame();
+      _win(today);
+      expect(today.status, GameStatus.won);
+      expect(today.stats.played, 1);
+      expect(today.stats.lastCompletedDate, '2026-10-15');
+    });
+
     test('old saved days are pruned', () async {
       _win(_newGame());
       _clock.current = DateTime(2026, 10, 20, 9);

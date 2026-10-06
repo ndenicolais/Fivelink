@@ -513,5 +513,9 @@
   "languageEnglish": "English",
   "@languageEnglish": {
     "description": "Language option, always written in English"
+  },
+  "helpReplay": "Watch again",
+  "@helpReplay": {
+    "description": "Replays the animated example in the guide"
   }
 }

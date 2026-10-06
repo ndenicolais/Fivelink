@@ -169,9 +169,10 @@ class GameController extends ChangeNotifier {
     }
   }
 
-  /// Aggiorna le statistiche al massimo una volta per giorno.
+  /// Aggiorna le statistiche al massimo una volta per giorno, solo in avanti
+  /// nel tempo (vedi [Stats.countsFor]).
   void _recordResultIfOver() {
-    if (!isOver || _stats.lastCompletedDate == dateKey(_daily.date)) return;
+    if (!isOver || !_stats.countsFor(_daily.date)) return;
     _stats = _status == GameStatus.won
         ? _stats.recordWin(_daily.date, _attempts.length)
         : _stats.recordLoss(_daily.date);

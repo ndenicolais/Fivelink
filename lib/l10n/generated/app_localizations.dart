@@ -709,6 +709,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'English'**
   String get languageEnglish;
+
+  /// Replays the animated example in the guide
+  ///
+  /// In en, this message translates to:
+  /// **'Watch again'**
+  String get helpReplay;
 }
 
 class _AppLocalizationsDelegate

@@ -183,6 +183,28 @@ void main() {
     expect(find.text('Example'), findsNothing);
   });
 
+  testWidgets('the guide example is revealed step by step and replays', (
+    tester,
+  ) async {
+    await _startGame(tester);
+    await tester.tap(find.byKey(const ValueKey('open-help')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    // 17 → 24 → 48 → 57 → 171 → 163: l'obiettivo compare per ultimo.
+    expect(find.text('24'), findsOneWidget);
+    expect(find.text('163'), findsNothing);
+
+    await tester.pumpAndSettle();
+    expect(find.text('163'), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('help-replay')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.text('163'), findsNothing);
+    await tester.pumpAndSettle();
+    expect(find.text('163'), findsOneWidget);
+  });
+
   testWidgets('the guide can be reopened from the app bar', (tester) async {
     await _startGame(tester);
     await tester.tap(find.byKey(const ValueKey('open-help')));

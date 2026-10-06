@@ -30,7 +30,6 @@ class HelpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final AppLocalizations l10n = AppLocalizations.of(context);
     final ThemeData theme = Theme.of(context);
-    final ChainResult example = evaluateChain(_exampleStart, _exampleSolution);
 
     return Scaffold(
       appBar: AppBar(
@@ -45,11 +44,7 @@ class HelpScreen extends StatelessWidget {
             _Heading(l10n.helpExampleTitle),
             Text(l10n.helpExampleIntro(_exampleStart, _exampleTarget)),
             const SizedBox(height: 8),
-            ChainRow(
-              tiles: _exampleSolution,
-              result: example,
-              outcome: AttemptOutcome.solved,
-            ),
+            const _AnimatedExample(),
             _Heading(l10n.helpTilesTitle),
             _TileRule(
               tiles: const [Operation.add(4), Operation.subtract(4)],
@@ -105,6 +100,49 @@ class HelpScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// L'esempio si svela un passaggio alla volta, come in partita, e si può
+/// rivedere.
+class _AnimatedExample extends StatefulWidget {
+  const _AnimatedExample();
+
+  @override
+  State<_AnimatedExample> createState() => _AnimatedExampleState();
+}
+
+class _AnimatedExampleState extends State<_AnimatedExample> {
+  static final ChainResult _result = evaluateChain(
+    _exampleStart,
+    _exampleSolution,
+  );
+
+  /// Cambia a ogni "Rivedi" per far ripartire l'animazione da capo.
+  int _run = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        AnimatedChainRow(
+          key: ValueKey('help-example-$_run'),
+          tiles: _exampleSolution,
+          result: _result,
+          outcome: AttemptOutcome.solved,
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton.icon(
+            key: const ValueKey('help-replay'),
+            onPressed: () => setState(() => _run++),
+            icon: const Icon(Icons.replay),
+            label: Text(AppLocalizations.of(context).helpReplay),
+          ),
+        ),
+      ],
     );
   }
 }

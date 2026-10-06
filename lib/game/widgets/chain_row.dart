@@ -188,15 +188,17 @@ class AnimatedChainRow extends StatefulWidget {
     required this.tiles,
     required this.result,
     required this.outcome,
-    required this.number,
-    required this.onRevealed,
+    this.number,
+    this.onRevealed,
   });
 
   final List<Operation> tiles;
   final ChainResult result;
   final AttemptOutcome outcome;
-  final int number;
-  final VoidCallback onRevealed;
+
+  /// Numero del tentativo, o null per un esempio senza numero.
+  final int? number;
+  final VoidCallback? onRevealed;
 
   @override
   State<AnimatedChainRow> createState() => _AnimatedChainRowState();
@@ -216,10 +218,12 @@ class _AnimatedChainRowState extends State<AnimatedChainRow>
     if (_controller.isAnimating || _controller.isCompleted) return;
     if (MediaQuery.disableAnimationsOf(context)) {
       _controller.value = 1;
-      WidgetsBinding.instance.addPostFrameCallback((_) => widget.onRevealed());
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => widget.onRevealed?.call(),
+      );
     } else {
       _controller.forward().whenCompleteOrCancel(() {
-        if (mounted) widget.onRevealed();
+        if (mounted) widget.onRevealed?.call();
       });
     }
   }
