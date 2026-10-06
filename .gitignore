@@ -35,6 +35,7 @@ migrate_working_dir/
 
 # Symbolication related
 app.*.symbols
+/symbols/
 
 # Obfuscation related
 app.*.map.json
@@ -55,9 +56,11 @@ app.*.map.json
 # Kotlin compiler daemon sessions
 android/.kotlin/
 
+# Local release build script
+deploy_android.ps1
+
 # Local AI assistant context (not shared with the team)
 CLAUDE.md
-NOTE_SESSIONI.md
 PLAN.md
 
 # Raw device screenshots (sources for tool/preview, kept locally)
