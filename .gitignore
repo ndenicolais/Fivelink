@@ -49,7 +49,19 @@ app.*.map.json
 *.jks
 *.keystore
 
+# Android debug
+.cxx/
+
+# Kotlin compiler daemon sessions
+android/.kotlin/
+
 # Local AI assistant context (not shared with the team)
 CLAUDE.md
 NOTE_SESSIONI.md
 PLAN.md
+
+# Raw device screenshots (sources for tool/preview, kept locally)
+images/screenshots/*_raw.png
+
+# Local helper scripts and tooling
+/tool/

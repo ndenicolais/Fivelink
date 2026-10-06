@@ -1,0 +1,58 @@
+# LICENSE - Fivelink
+
+**Copyright (c) 2026 Nicola De Nicolais <ndn21dev@gmail.com>. All rights reserved.**
+
+---
+
+## 1. PREAMBLE
+
+This is a **source-available, non-commercial license**. It is **not** the GNU General Public License (GPL) or any other OSI-approved open-source license, and no such license applies to this software.
+
+The goal is to keep the source code visible and usable for educational, personal, and non-commercial purposes, while the copyright holder retains full control over commercial exploitation, distribution, and the Fivelink name.
+
+---
+
+## 2. GRANT OF RIGHTS
+
+Subject to the restrictions in Section 3, the copyright holder grants you a worldwide, royalty-free, non-exclusive license to:
+
+* **View, study, and download** the source code.
+* **Use** the software for personal, educational, or evaluation purposes.
+* **Modify** the source code for your own personal or educational use.
+* **Share** unmodified or modified copies of the source code, provided you comply with Section 3.
+
+---
+
+## 3. RESTRICTIONS
+
+* **NO COMMERCIAL USE:** You may not use this software, in whole or in part, to publish, distribute, sell, sublicense, or otherwise monetize an application on any platform (including but not limited to the Google Play Store, Apple App Store, or any web distribution) without explicit prior written permission from Nicola De Nicolais.
+* **NO SUBLICENSING OF COMMERCIAL RIGHTS:** You may not grant any third party rights to this software beyond those granted to you under this license.
+* **ATTRIBUTION:** All copies or substantial portions of the software, modified or not, must retain the original copyright notice and this license in full.
+* **BRANDING:** "Fivelink" is a protected project name. You may not use this name, or any confusingly similar name, for derivative or redistributed works without permission.
+* **NO WARRANTY OF CONTINUED AVAILABILITY:** The copyright holder may stop distributing or update the source code, or change these terms for future releases, at any time. This license, as applied to a given copy of the code, is not revoked retroactively for that copy.
+
+For commercial licensing inquiries or special permissions, contact: **ndn21dev@gmail.com**
+
+---
+
+## 4. DISCLAIMER OF WARRANTY
+
+THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+---
+
+## 5. TERMINATION
+
+Any violation of Section 3 automatically terminates your rights under this license. Upon termination, you must cease all use, distribution, and modification of the software.
+
+---
+
+## 6. ORIGINAL AUTHOR & COPYRIGHT SUMMARY
+
+* **Project:** Fivelink
+* **Author:** Nicola De Nicolais
+* **Email:** ndn21dev@gmail.com
+* **Year:** 2026
+* **GitHub:** [https://github.com/ndenicolais](https://github.com/ndenicolais)
+
+This project and all its source code are the original intellectual property of Nicola De Nicolais. Unauthorized commercial use or claiming authorship of this work is a violation of this license and applicable copyright law.
