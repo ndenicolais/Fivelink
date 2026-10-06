@@ -1,17 +1,27 @@
 import 'package:fivelink/app.dart';
 import 'package:fivelink/core/puzzle.dart';
 import 'package:fivelink/core/puzzle_generator.dart';
+import 'package:fivelink/data/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'helpers/fake_clock.dart';
+import 'helpers/test_storage.dart';
 
 /// Rompicapo #1 (10 ottobre 2026): partenza 17, obiettivo 114,
 /// tessere `⇄ +4 ÷2 −3 ×3`, soluzione `[0, 3, 2, 1, 4]`.
 final DateTime _launchDay = DateTime(2026, 10, 10, 9, 30);
 
-Future<void> _startGame(WidgetTester tester) async {
-  await tester.pumpWidget(FivelinkApp(clock: FakeClock(_launchDay)));
+/// Avvia l'app. Senza [storage] parte con la guida già vista.
+Future<void> _startGame(
+  WidgetTester tester, {
+  Storage? storage,
+  FakeClock? clock,
+}) async {
+  final Storage s = storage ?? await createStorage(helpSeenValues);
+  await tester.pumpWidget(
+    FivelinkApp(storage: s, clock: clock ?? FakeClock(_launchDay)),
+  );
   await tester.pumpAndSettle();
 }
 
@@ -59,6 +69,8 @@ void main() {
     expect(find.textContaining('Next puzzle in'), findsOneWidget);
     expect(find.byKey(const ValueKey('check')), findsNothing);
     // I valori intermedi del tentativo restano visibili.
+    await tester.drag(find.byType(ListView), const Offset(0, 2000));
+    await tester.pumpAndSettle();
     for (final String v in ['71', '68', '34', '38']) {
       expect(find.text(v), findsOneWidget);
     }
@@ -145,5 +157,78 @@ void main() {
     await _startGame(tester);
     await _playOrder(tester, [0, 1, 2, 3, 4]);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('the guide opens on first launch only', (tester) async {
+    final Storage storage = await createStorage();
+    await _startGame(tester, storage: storage);
+    expect(find.text('How to play'), findsWidgets);
+    expect(find.text('Example'), findsOneWidget);
+
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('help-play')),
+      200,
+    );
+    await tester.tap(find.byKey(const ValueKey('help-play')));
+    await tester.pumpAndSettle();
+    expect(find.text('Example'), findsNothing);
+    expect(storage.loadSettings().helpSeen, isTrue);
+
+    await tester.pumpWidget(const SizedBox());
+    await _startGame(tester, storage: storage);
+    expect(find.text('Example'), findsNothing);
+  });
+
+  testWidgets('the guide can be reopened from the app bar', (tester) async {
+    await _startGame(tester);
+    await tester.tap(find.byKey(const ValueKey('open-help')));
+    await tester.pumpAndSettle();
+    expect(find.text('Example'), findsOneWidget);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.text('Example'), findsNothing);
+  });
+
+  testWidgets('statistics open from the app bar', (tester) async {
+    await _startGame(tester);
+    await tester.tap(find.byKey(const ValueKey('open-stats')));
+    await tester.pumpAndSettle();
+    expect(find.text('Statistics'), findsWidgets);
+    expect(find.text('Wins by attempt'), findsOneWidget);
+  });
+
+  testWidgets('the game over panel has stats and share', (tester) async {
+    await _startGame(tester);
+    await _playOrder(tester, [0, 3, 2, 1, 4]);
+    await tester.scrollUntilVisible(find.byKey(const ValueKey('share')), 200);
+    expect(find.text('Played'), findsOneWidget);
+    expect(find.text('Share'), findsOneWidget);
+  });
+
+  testWidgets('a game in progress survives a restart', (tester) async {
+    final Storage storage = await createStorage(helpSeenValues);
+    await _startGame(tester, storage: storage);
+    await _playOrder(tester, [0, 1, 2, 3, 4]);
+    expect(find.text('Chain broken'), findsOneWidget);
+
+    await tester.pumpWidget(const SizedBox());
+    await _startGame(tester, storage: storage);
+    expect(find.text('Chain broken'), findsOneWidget);
+    expect(find.text('You already tried this order'), findsOneWidget);
+  });
+
+  testWidgets('a new day loads when the app comes back', (tester) async {
+    final FakeClock clock = FakeClock(_launchDay);
+    await _startGame(tester, clock: clock);
+    await _playOrder(tester, [0, 3, 2, 1, 4]);
+    expect(find.text('Solved!'), findsOneWidget);
+
+    clock.current = DateTime(2026, 10, 11, 8);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.inactive);
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pumpAndSettle();
+    expect(find.text('Fivelink #2'), findsOneWidget);
+    expect(find.text('Solved!'), findsNothing);
+    expect(find.text('Attempt 1 of 6'), findsOneWidget);
   });
 }

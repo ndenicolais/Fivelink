@@ -28,9 +28,13 @@ DateTime localDay(DateTime moment) =>
 /// Numero del rompicapo per il giorno di [day]. Si confrontano date UTC
 /// costruite da anno, mese e giorno: una differenza tra date locali può
 /// perdere un giorno al cambio dell'ora.
-int puzzleNumber(DateTime day) {
-  final DateTime utcDay = DateTime.utc(day.year, day.month, day.day);
-  return utcDay.difference(launchDate).inDays + 1;
+int puzzleNumber(DateTime day) => daysBetween(launchDate, day) + 1;
+
+/// Giorni di calendario da [from] a [to], ignorando ora e fuso.
+int daysBetween(DateTime from, DateTime to) {
+  final DateTime a = DateTime.utc(from.year, from.month, from.day);
+  final DateTime b = DateTime.utc(to.year, to.month, to.day);
+  return b.difference(a).inDays;
 }
 
 /// Mezzanotte locale successiva a [now].
@@ -47,6 +51,21 @@ String dateKey(DateTime day) {
   final String m = day.month.toString().padLeft(2, '0');
   final String d = day.day.toString().padLeft(2, '0');
   return '$y-$m-$d';
+}
+
+/// Inverso di [dateKey]. Restituisce null se [key] non è una data valida.
+DateTime? parseDateKey(String key) {
+  final RegExpMatch? match = RegExp(
+    r'^(\d{4})-(\d{2})-(\d{2})$',
+  ).firstMatch(key);
+  if (match == null) return null;
+  final int year = int.parse(match[1]!);
+  final int month = int.parse(match[2]!);
+  final int day = int.parse(match[3]!);
+  final DateTime date = DateTime(year, month, day);
+  // Scarta date come 2026-02-31, che DateTime normalizzerebbe.
+  if (date.month != month || date.day != day) return null;
+  return date;
 }
 
 /// Il rompicapo di un giorno con il suo numero.

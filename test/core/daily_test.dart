@@ -96,6 +96,23 @@ void main() {
     });
   });
 
+  test('daysBetween counts calendar days', () {
+    expect(
+      daysBetween(DateTime(2026, 10, 24, 23), DateTime(2026, 10, 26, 1)),
+      2,
+    );
+    expect(daysBetween(DateTime(2026, 10, 10), DateTime(2026, 10, 9)), -1);
+    expect(daysBetween(DateTime(2026, 12, 31), DateTime(2027, 1, 1)), 1);
+  });
+
+  test('parseDateKey reverses dateKey and rejects bad input', () {
+    expect(parseDateKey('2026-10-25'), DateTime(2026, 10, 25));
+    expect(parseDateKey(dateKey(DateTime(2028, 2, 29))), DateTime(2028, 2, 29));
+    expect(parseDateKey('2026-02-31'), isNull);
+    expect(parseDateKey('2026-1-5'), isNull);
+    expect(parseDateKey('bad'), isNull);
+  });
+
   test('dateKey is zero-padded', () {
     expect(dateKey(DateTime(2026, 1, 5)), '2026-01-05');
     expect(dateKey(DateTime(2026, 10, 25, 23, 59)), '2026-10-25');

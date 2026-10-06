@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 
 import '../core/chain.dart';
 import '../core/daily.dart';
 import '../core/puzzle.dart';
+import '../data/models.dart';
+import '../data/storage.dart';
+import 'share_text.dart';
 
-enum GameStatus { playing, won, lost }
+export '../data/models.dart' show GameStatus;
 
 final class Attempt {
   Attempt({
@@ -19,18 +24,25 @@ final class Attempt {
   final AttemptOutcome outcome;
 }
 
-/// Stato della partita del giorno. Per ora solo in memoria.
+/// Stato della partita del giorno, salvato a ogni tentativo.
 class GameController extends ChangeNotifier {
-  GameController({required this.daily})
-    : _slots = List<int?>.filled(daily.puzzle.tiles.length, null);
+  GameController({required this._storage, required this._clock}) {
+    _load(DailyPuzzle.today(_clock));
+    unawaited(_storage.pruneOldDays(_daily.date));
+  }
 
-  final DailyPuzzle daily;
+  final Storage _storage;
+  final Clock _clock;
 
-  final List<int?> _slots;
+  late DailyPuzzle _daily;
+  late List<int?> _slots;
   final List<Attempt> _attempts = [];
   GameStatus _status = GameStatus.playing;
+  late Stats _stats;
 
-  Puzzle get puzzle => daily.puzzle;
+  DailyPuzzle get daily => _daily;
+
+  Puzzle get puzzle => _daily.puzzle;
 
   /// Per ogni slot l'indice della tessera inserita, o null se è vuoto.
   List<int?> get slots => List.unmodifiable(_slots);
@@ -42,6 +54,11 @@ class GameController extends ChangeNotifier {
   bool get isOver => _status != GameStatus.playing;
 
   int get attemptsLeft => maxAttempts - _attempts.length;
+
+  Stats get stats => _stats;
+
+  /// Serie attuale, azzerata se è stato saltato un giorno.
+  int get currentStreak => _stats.streakOn(_clock.now());
 
   bool isTileUsed(int tile) => _slots.contains(tile);
 
@@ -57,6 +74,12 @@ class GameController extends ChangeNotifier {
   }
 
   bool get canSubmit => !isOver && slotsFull && !isDuplicate;
+
+  /// Testo da condividere a partita finita, senza la soluzione.
+  String get shareText => buildShareText(
+    number: _daily.number,
+    outcomes: [for (final Attempt a in _attempts) a.outcome],
+  );
 
   /// Mette [tile] nel primo slot libero.
   void placeTile(int tile) {
@@ -85,7 +108,53 @@ class GameController extends ChangeNotifier {
   /// correggere l'ordine senza ricominciare.
   Attempt? submit() {
     if (!canSubmit) return null;
-    final List<int> order = _slots.cast<int>().toList();
+    _addAttempt(_slots.cast<int>().toList());
+    _recordResultIfOver();
+    unawaited(
+      _storage.saveDay(
+        DayRecord(
+          date: dateKey(_daily.date),
+          attempts: [for (final Attempt a in _attempts) a.order],
+          status: _status,
+        ),
+      ),
+    );
+    notifyListeners();
+    return _attempts.last;
+  }
+
+  /// Se la data è cambiata carica il rompicapo del nuovo giorno. Da chiamare
+  /// quando l'app torna in primo piano e a mezzanotte.
+  bool refreshDay() {
+    if (_daily.isForDay(_clock.now())) return false;
+    _load(DailyPuzzle.today(_clock));
+    unawaited(_storage.pruneOldDays(_daily.date));
+    notifyListeners();
+    return true;
+  }
+
+  void _load(DailyPuzzle daily) {
+    _daily = daily;
+    _slots = List<int?>.filled(daily.puzzle.tiles.length, null);
+    _attempts.clear();
+    _status = GameStatus.playing;
+    _stats = _storage.loadStats();
+
+    final DayRecord? saved = _storage.loadDay(daily.date);
+    if (saved == null) return;
+    for (final List<int> order in saved.attempts) {
+      if (isOver || !_isValidOrder(order)) break;
+      _addAttempt(order);
+    }
+    if (_attempts.isNotEmpty && !isOver) {
+      _slots.setAll(0, _attempts.last.order);
+    }
+    // Se l'app si è chiusa tra il salvataggio della partita e quello delle
+    // statistiche, il risultato viene registrato adesso.
+    _recordResultIfOver();
+  }
+
+  void _addAttempt(List<int> order) {
     final ChainResult result = puzzle.evaluate(order);
     final Attempt attempt = Attempt(
       order: order,
@@ -98,7 +167,21 @@ class GameController extends ChangeNotifier {
     } else if (_attempts.length >= maxAttempts) {
       _status = GameStatus.lost;
     }
-    notifyListeners();
-    return attempt;
+  }
+
+  /// Aggiorna le statistiche al massimo una volta per giorno.
+  void _recordResultIfOver() {
+    if (!isOver || _stats.lastCompletedDate == dateKey(_daily.date)) return;
+    _stats = _status == GameStatus.won
+        ? _stats.recordWin(_daily.date, _attempts.length)
+        : _stats.recordLoss(_daily.date);
+    unawaited(_storage.saveStats(_stats));
+  }
+
+  bool _isValidOrder(List<int> order) {
+    final int n = puzzle.tiles.length;
+    return order.length == n &&
+        order.toSet().length == n &&
+        order.every((i) => i >= 0 && i < n);
   }
 }

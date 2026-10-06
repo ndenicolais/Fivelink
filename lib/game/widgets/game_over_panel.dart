@@ -3,20 +3,23 @@ import 'package:flutter/material.dart';
 import '../../core/daily.dart';
 import '../../core/puzzle.dart';
 import '../../l10n/generated/app_localizations.dart';
+import '../../stats/stats_view.dart';
 import '../game_controller.dart';
 import 'chain_row.dart';
 import 'countdown_text.dart';
 
-/// Esito della partita, soluzione se persa e conto alla rovescia.
+/// Esito, soluzione se persa, statistiche, conto alla rovescia e condivisione.
 class GameOverPanel extends StatelessWidget {
   const GameOverPanel({
     super.key,
     required this.controller,
     required this.clock,
+    required this.onShare,
   });
 
   final GameController controller;
   final Clock clock;
+  final VoidCallback onShare;
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +59,21 @@ class GameOverPanel extends StatelessWidget {
                 outcome: AttemptOutcome.solved,
               ),
             ],
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
+            StatsView(
+              stats: controller.stats,
+              currentStreak: controller.currentStreak,
+              highlightAttempts: won ? controller.attempts.length : null,
+            ),
+            const SizedBox(height: 20),
             CountdownText(clock: clock, style: theme.textTheme.bodyLarge),
+            const SizedBox(height: 12),
+            FilledButton.icon(
+              key: const ValueKey('share'),
+              onPressed: onShare,
+              icon: const Icon(Icons.share),
+              label: Text(l10n.shareButton),
+            ),
           ],
         ),
       ),

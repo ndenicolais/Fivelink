@@ -119,4 +119,111 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get slotHint => 'remove the tile';
+
+  @override
+  String get helpTooltip => 'How to play';
+
+  @override
+  String get statsTooltip => 'Statistics';
+
+  @override
+  String get helpTitle => 'How to play';
+
+  @override
+  String get helpGoal =>
+      'Every day you get a start number, a target and 5 operation tiles. Put the tiles in order: applied one after another to the start number, they must reach the target. Each tile is used exactly once.';
+
+  @override
+  String get helpExampleTitle => 'Example';
+
+  @override
+  String helpExampleIntro(int start, int target) {
+    return 'Start $start, target $target. The right order is:';
+  }
+
+  @override
+  String get helpTilesTitle => 'The tiles';
+
+  @override
+  String get helpTileAddSubtract => 'Add or subtract a number from 1 to 9.';
+
+  @override
+  String get helpTileMultiply => 'Multiply by 2 or 3.';
+
+  @override
+  String get helpTileDivide => 'Divide by 2 or 3. The division must be exact.';
+
+  @override
+  String get helpTileReverse => 'Reverses the digits: 36 becomes 63.';
+
+  @override
+  String get helpBreakTitle => 'When the chain breaks';
+
+  @override
+  String get helpBreakRange =>
+      'Every number along the chain must stay between 1 and 999.';
+
+  @override
+  String get helpBreakDivide =>
+      'A division that is not exact breaks the chain: 7 ÷ 2 is not allowed.';
+
+  @override
+  String get helpBreakReverse =>
+      'Reversing does not work on single digits, numbers ending in 0 or palindromes like 121.';
+
+  @override
+  String get helpAttemptsTitle => 'Attempts';
+
+  @override
+  String get helpAttempts =>
+      'Tap a tile to place it in the first free slot, tap a slot to take it back. You have 6 attempts and cannot check the same order twice. After each check you see every intermediate value, up to the result or the point where the chain broke.';
+
+  @override
+  String get helpOutcomeBroken => 'an operation was not possible';
+
+  @override
+  String get helpOutcomeWrong =>
+      'the chain is complete but the result is wrong';
+
+  @override
+  String get helpOutcomeSolved => 'you reached the target';
+
+  @override
+  String get helpDaily =>
+      'A new puzzle every day at midnight, the same for everyone.';
+
+  @override
+  String get helpPlayButton => 'Play';
+
+  @override
+  String get statsTitle => 'Statistics';
+
+  @override
+  String get statsPlayed => 'Played';
+
+  @override
+  String get statsWinPercent => 'Win %';
+
+  @override
+  String get statsCurrentStreak => 'Current streak';
+
+  @override
+  String get statsMaxStreak => 'Best streak';
+
+  @override
+  String get statsDistribution => 'Wins by attempt';
+
+  @override
+  String statsBarSemantics(int attempt, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count wins',
+      one: '1 win',
+    );
+    return 'Attempt $attempt: $_temp0';
+  }
+
+  @override
+  String get shareButton => 'Share';
 }

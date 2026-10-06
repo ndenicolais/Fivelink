@@ -8,7 +8,9 @@
   "@puzzleTitle": {
     "description": "Game screen title with the daily puzzle number",
     "placeholders": {
-      "number": {"type": "int"}
+      "number": {
+        "type": "int"
+      }
     }
   },
   "startLabel": "Start",
@@ -23,8 +25,12 @@
   "@attemptCounter": {
     "description": "Which attempt the player is on",
     "placeholders": {
-      "current": {"type": "int"},
-      "max": {"type": "int"}
+      "current": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
     }
   },
   "historyHint": "Put the 5 tiles in order to turn the start number into the target. Each tile is used once.",
@@ -51,7 +57,9 @@
   "@outcomeWrongResult": {
     "description": "Attempt result: the chain completed with the wrong number",
     "placeholders": {
-      "value": {"type": "int"}
+      "value": {
+        "type": "int"
+      }
     }
   },
   "outcomeSolved": "Solved",
@@ -62,9 +70,15 @@
   "@attemptSemantics": {
     "description": "Screen reader summary of a past attempt",
     "placeholders": {
-      "number": {"type": "int"},
-      "tiles": {"type": "String"},
-      "outcome": {"type": "String"}
+      "number": {
+        "type": "int"
+      },
+      "tiles": {
+        "type": "String"
+      },
+      "outcome": {
+        "type": "String"
+      }
     }
   },
   "wonTitle": "Solved!",
@@ -75,7 +89,9 @@
   "@wonSubtitle": {
     "description": "How many attempts the win took",
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "lostTitle": "Out of attempts",
@@ -90,35 +106,45 @@
   "@nextPuzzleIn": {
     "description": "Countdown to the next daily puzzle",
     "placeholders": {
-      "time": {"type": "String"}
+      "time": {
+        "type": "String"
+      }
     }
   },
   "opAdd": "plus {n}",
   "@opAdd": {
     "description": "Screen reader name of an addition tile",
     "placeholders": {
-      "n": {"type": "int"}
+      "n": {
+        "type": "int"
+      }
     }
   },
   "opSubtract": "minus {n}",
   "@opSubtract": {
     "description": "Screen reader name of a subtraction tile",
     "placeholders": {
-      "n": {"type": "int"}
+      "n": {
+        "type": "int"
+      }
     }
   },
   "opMultiply": "times {n}",
   "@opMultiply": {
     "description": "Screen reader name of a multiplication tile",
     "placeholders": {
-      "n": {"type": "int"}
+      "n": {
+        "type": "int"
+      }
     }
   },
   "opDivide": "divided by {n}",
   "@opDivide": {
     "description": "Screen reader name of a division tile",
     "placeholders": {
-      "n": {"type": "int"}
+      "n": {
+        "type": "int"
+      }
     }
   },
   "opReverse": "reverse digits",
@@ -133,19 +159,161 @@
   "@slotEmpty": {
     "description": "Screen reader label of an empty slot",
     "placeholders": {
-      "index": {"type": "int"}
+      "index": {
+        "type": "int"
+      }
     }
   },
   "slotFilled": "Slot {index}: {tile}",
   "@slotFilled": {
     "description": "Screen reader label of a filled slot",
     "placeholders": {
-      "index": {"type": "int"},
-      "tile": {"type": "String"}
+      "index": {
+        "type": "int"
+      },
+      "tile": {
+        "type": "String"
+      }
     }
   },
   "slotHint": "remove the tile",
   "@slotHint": {
     "description": "Screen reader hint for a filled slot"
+  },
+  "helpTooltip": "How to play",
+  "@helpTooltip": {
+    "description": "App bar button that opens the guide"
+  },
+  "statsTooltip": "Statistics",
+  "@statsTooltip": {
+    "description": "App bar button that opens the statistics"
+  },
+  "helpTitle": "How to play",
+  "@helpTitle": {
+    "description": "Title of the guide screen"
+  },
+  "helpGoal": "Every day you get a start number, a target and 5 operation tiles. Put the tiles in order: applied one after another to the start number, they must reach the target. Each tile is used exactly once.",
+  "@helpGoal": {
+    "description": "Guide: the goal of the game"
+  },
+  "helpExampleTitle": "Example",
+  "@helpExampleTitle": {
+    "description": "Guide section heading"
+  },
+  "helpExampleIntro": "Start {start}, target {target}. The right order is:",
+  "@helpExampleIntro": {
+    "description": "Guide: introduces the worked example",
+    "placeholders": {
+      "start": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "helpTilesTitle": "The tiles",
+  "@helpTilesTitle": {
+    "description": "Guide section heading"
+  },
+  "helpTileAddSubtract": "Add or subtract a number from 1 to 9.",
+  "@helpTileAddSubtract": {
+    "description": "Guide: addition and subtraction tiles"
+  },
+  "helpTileMultiply": "Multiply by 2 or 3.",
+  "@helpTileMultiply": {
+    "description": "Guide: multiplication tiles"
+  },
+  "helpTileDivide": "Divide by 2 or 3. The division must be exact.",
+  "@helpTileDivide": {
+    "description": "Guide: division tiles"
+  },
+  "helpTileReverse": "Reverses the digits: 36 becomes 63.",
+  "@helpTileReverse": {
+    "description": "Guide: digit reversal tile"
+  },
+  "helpBreakTitle": "When the chain breaks",
+  "@helpBreakTitle": {
+    "description": "Guide section heading"
+  },
+  "helpBreakRange": "Every number along the chain must stay between 1 and 999.",
+  "@helpBreakRange": {
+    "description": "Guide: range rule"
+  },
+  "helpBreakDivide": "A division that is not exact breaks the chain: 7 ÷ 2 is not allowed.",
+  "@helpBreakDivide": {
+    "description": "Guide: division rule"
+  },
+  "helpBreakReverse": "Reversing does not work on single digits, numbers ending in 0 or palindromes like 121.",
+  "@helpBreakReverse": {
+    "description": "Guide: reversal rule"
+  },
+  "helpAttemptsTitle": "Attempts",
+  "@helpAttemptsTitle": {
+    "description": "Guide section heading"
+  },
+  "helpAttempts": "Tap a tile to place it in the first free slot, tap a slot to take it back. You have 6 attempts and cannot check the same order twice. After each check you see every intermediate value, up to the result or the point where the chain broke.",
+  "@helpAttempts": {
+    "description": "Guide: how attempts work"
+  },
+  "helpOutcomeBroken": "an operation was not possible",
+  "@helpOutcomeBroken": {
+    "description": "Guide: meaning of the broken chain result"
+  },
+  "helpOutcomeWrong": "the chain is complete but the result is wrong",
+  "@helpOutcomeWrong": {
+    "description": "Guide: meaning of the wrong result"
+  },
+  "helpOutcomeSolved": "you reached the target",
+  "@helpOutcomeSolved": {
+    "description": "Guide: meaning of the solved result"
+  },
+  "helpDaily": "A new puzzle every day at midnight, the same for everyone.",
+  "@helpDaily": {
+    "description": "Guide: daily puzzle note"
+  },
+  "helpPlayButton": "Play",
+  "@helpPlayButton": {
+    "description": "Closes the guide"
+  },
+  "statsTitle": "Statistics",
+  "@statsTitle": {
+    "description": "Title of the statistics panel"
+  },
+  "statsPlayed": "Played",
+  "@statsPlayed": {
+    "description": "Number of games played"
+  },
+  "statsWinPercent": "Win %",
+  "@statsWinPercent": {
+    "description": "Percentage of games won"
+  },
+  "statsCurrentStreak": "Current streak",
+  "@statsCurrentStreak": {
+    "description": "Consecutive daily wins up to today"
+  },
+  "statsMaxStreak": "Best streak",
+  "@statsMaxStreak": {
+    "description": "Longest run of consecutive daily wins"
+  },
+  "statsDistribution": "Wins by attempt",
+  "@statsDistribution": {
+    "description": "Heading of the win distribution chart"
+  },
+  "statsBarSemantics": "Attempt {attempt}: {count, plural, =1{1 win} other{{count} wins}}",
+  "@statsBarSemantics": {
+    "description": "Screen reader label of a distribution bar",
+    "placeholders": {
+      "attempt": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "shareButton": "Share",
+  "@shareButton": {
+    "description": "Shares the result as text"
   }
 }

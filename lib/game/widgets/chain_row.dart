@@ -13,6 +13,20 @@ const Duration chainStepDuration = Duration(milliseconds: 380);
 int chainSteps(ChainResult result) =>
     result.isComplete ? result.length : result.values.length + 1;
 
+/// Icona dell'esito: l'informazione non è affidata solo al colore.
+IconData outcomeIcon(AttemptOutcome outcome) => switch (outcome) {
+  AttemptOutcome.broken => Icons.link_off,
+  AttemptOutcome.wrongResult => Icons.close,
+  AttemptOutcome.solved => Icons.check_circle,
+};
+
+Color outcomeColor(ThemeData theme, AttemptOutcome outcome) =>
+    switch (outcome) {
+      AttemptOutcome.broken => theme.colorScheme.error,
+      AttemptOutcome.wrongResult => theme.colorScheme.tertiary,
+      AttemptOutcome.solved => theme.colorScheme.primary,
+    };
+
 /// Una catena: per ogni tessera la sua etichetta e il valore ottenuto.
 /// Mostra solo i primi [revealed] passaggi; l'esito compare alla fine.
 class ChainRow extends StatelessWidget {
@@ -84,13 +98,17 @@ class ChainRow extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 28, top: 2),
                 child: Row(
                   children: [
-                    Icon(_outcomeIcon, size: 18, color: _outcomeColor(theme)),
+                    Icon(
+                      outcomeIcon(outcome),
+                      size: 18,
+                      color: outcomeColor(theme, outcome),
+                    ),
                     const SizedBox(width: 6),
                     Flexible(
                       child: Text(
                         outcomeText,
                         style: theme.textTheme.bodyMedium?.copyWith(
-                          color: _outcomeColor(theme),
+                          color: outcomeColor(theme, outcome),
                         ),
                       ),
                     ),
@@ -103,18 +121,6 @@ class ChainRow extends StatelessWidget {
       ),
     );
   }
-
-  IconData get _outcomeIcon => switch (outcome) {
-    AttemptOutcome.broken => Icons.link_off,
-    AttemptOutcome.wrongResult => Icons.close,
-    AttemptOutcome.solved => Icons.check_circle,
-  };
-
-  Color _outcomeColor(ThemeData theme) => switch (outcome) {
-    AttemptOutcome.broken => theme.colorScheme.error,
-    AttemptOutcome.wrongResult => theme.colorScheme.tertiary,
-    AttemptOutcome.solved => theme.colorScheme.primary,
-  };
 
   Widget _cell(BuildContext context, int i) {
     final ThemeData theme = Theme.of(context);

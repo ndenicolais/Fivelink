@@ -1,37 +1,110 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../core/daily.dart';
 import '../core/puzzle.dart';
+import '../data/models.dart';
+import '../data/storage.dart';
+import '../help/help_screen.dart';
 import '../l10n/generated/app_localizations.dart';
+import '../stats/stats_view.dart';
 import 'game_controller.dart';
 import 'widgets/chain_row.dart';
 import 'widgets/game_over_panel.dart';
 import 'widgets/tile_view.dart';
 
 class GameScreen extends StatefulWidget {
-  const GameScreen({super.key, required this.clock});
+  const GameScreen({super.key, required this.storage, required this.clock});
 
+  final Storage storage;
   final Clock clock;
 
   @override
   State<GameScreen> createState() => _GameScreenState();
 }
 
-class _GameScreenState extends State<GameScreen> {
+class _GameScreenState extends State<GameScreen> with WidgetsBindingObserver {
   late final GameController _controller = GameController(
-    daily: DailyPuzzle.today(widget.clock),
+    storage: widget.storage,
+    clock: widget.clock,
   );
   final ScrollController _scroll = ScrollController();
+  Timer? _midnightTimer;
 
   /// Tentativo di cui si sta animando la catena. Intanto l'input è bloccato e
   /// la fine partita non viene ancora mostrata.
   int? _revealing;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _scheduleMidnight();
+    if (!widget.storage.loadSettings().helpSeen) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _openHelp());
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _midnightTimer?.cancel();
     _controller.dispose();
     _scroll.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) _refreshDay();
+  }
+
+  /// Ricontrolla la data poco dopo la mezzanotte, se l'app è aperta.
+  void _scheduleMidnight() {
+    _midnightTimer?.cancel();
+    final Duration wait =
+        timeUntilNextPuzzle(widget.clock.now()) + const Duration(seconds: 1);
+    _midnightTimer = Timer(wait, () {
+      _refreshDay();
+      _scheduleMidnight();
+    });
+  }
+
+  void _refreshDay() {
+    if (!_controller.refreshDay()) return;
+    setState(() => _revealing = null);
+    _scheduleMidnight();
+  }
+
+  Future<void> _openHelp() async {
+    await Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const HelpScreen()));
+    final Settings settings = widget.storage.loadSettings();
+    if (!settings.helpSeen) {
+      await widget.storage.saveSettings(settings.copyWith(helpSeen: true));
+    }
+  }
+
+  void _openStats() {
+    unawaited(
+      showStatsSheet(
+        context,
+        stats: _controller.stats,
+        currentStreak: _controller.currentStreak,
+        highlightAttempts: _controller.status == GameStatus.won
+            ? _controller.attempts.length
+            : null,
+      ),
+    );
+  }
+
+  void _share() {
+    unawaited(
+      SharePlus.instance.share(ShareParams(text: _controller.shareText)),
+    );
   }
 
   void _submit() {
@@ -67,6 +140,20 @@ class _GameScreenState extends State<GameScreen> {
           appBar: AppBar(
             title: Text(l10n.puzzleTitle(_controller.daily.number)),
             centerTitle: true,
+            leading: IconButton(
+              key: const ValueKey('open-help'),
+              tooltip: l10n.helpTooltip,
+              icon: const Icon(Icons.help_outline),
+              onPressed: _openHelp,
+            ),
+            actions: [
+              IconButton(
+                key: const ValueKey('open-stats'),
+                tooltip: l10n.statsTooltip,
+                icon: const Icon(Icons.bar_chart),
+                onPressed: _openStats,
+              ),
+            ],
           ),
           body: SafeArea(
             child: Padding(
@@ -128,7 +215,11 @@ class _GameScreenState extends State<GameScreen> {
               number: i + 1,
             ),
         if (showGameOver)
-          GameOverPanel(controller: _controller, clock: widget.clock),
+          GameOverPanel(
+            controller: _controller,
+            clock: widget.clock,
+            onShare: _share,
+          ),
       ],
     );
   }

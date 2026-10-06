@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'core/daily.dart';
+import 'data/storage.dart';
 import 'game/game_screen.dart';
 import 'l10n/generated/app_localizations.dart';
 
 class FivelinkApp extends StatelessWidget {
-  const FivelinkApp({super.key, this.clock = const SystemClock()});
+  const FivelinkApp({
+    super.key,
+    required this.storage,
+    this.clock = const SystemClock(),
+  });
+
+  final Storage storage;
 
   /// Sostituibile nei test per simulare un giorno preciso.
   final Clock clock;
@@ -25,7 +32,7 @@ class FivelinkApp extends StatelessWidget {
           brightness: Brightness.dark,
         ),
       ),
-      home: GameScreen(clock: clock),
+      home: GameScreen(storage: storage, clock: clock),
     );
   }
 }
