@@ -48,3 +48,8 @@ app.*.map.json
 /android/key.properties
 *.jks
 *.keystore
+
+# Local AI assistant context (not shared with the team)
+CLAUDE.md
+NOTE_SESSIONI.md
+PLAN.md
