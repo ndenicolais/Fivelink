@@ -91,7 +91,11 @@ Puzzle generatePuzzle(int seed) {
 
     // presentation[p] è l'indice in drawn della tessera mostrata in posizione p.
     final List<int> presentation = List<int>.generate(tileCount, _id);
-    rng.shuffle(presentation);
+    // Le tessere non devono comparire già nell'ordine di una soluzione:
+    // in quel caso si rimescola con lo stesso generatore.
+    do {
+      rng.shuffle(presentation);
+    } while (solutions.any((s) => _listEquals(s, presentation)));
     final List<int> positionOf = List<int>.filled(tileCount, 0);
     for (int p = 0; p < tileCount; p++) {
       positionOf[presentation[p]] = p;
@@ -165,3 +169,11 @@ int? _run(int start, List<Operation> tiles, List<int> order) {
 }
 
 int _id(int i) => i;
+
+bool _listEquals(List<int> a, List<int> b) {
+  if (a.length != b.length) return false;
+  for (int i = 0; i < a.length; i++) {
+    if (a[i] != b[i]) return false;
+  }
+  return true;
+}

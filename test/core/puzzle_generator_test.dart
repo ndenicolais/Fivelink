@@ -78,6 +78,13 @@ void main() {
         reason: where,
       );
       expect(p.solutions.length, inInclusiveRange(1, 2), reason: where);
+      for (final List<int> s in p.solutions) {
+        expect(
+          s,
+          isNot([0, 1, 2, 3, 4]),
+          reason: 'tiles shown already in solution order ',
+        );
+      }
 
       // Le soluzioni dichiarate sono esattamente quelle reali.
       final Set<String> actual = {
